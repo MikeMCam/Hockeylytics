@@ -13,7 +13,7 @@ posts = [
     },
     {
         'author': 'MikeMDC1',
-        'title': 'secnd post!',
+        'title': 'second post!',
         'content': 'ha ddddd',
         'date_posted': 'August 27, 2019'
     },
