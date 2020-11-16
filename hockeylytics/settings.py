@@ -133,4 +133,11 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
 
+# Tells CrispyForms what css package to use for styling
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Tells Django where to redirect the user after logging in
+LOGIN_REDIRECT_URL = 'home'
+
+# Changes default login link
+LOGIN_URL = 'login'
