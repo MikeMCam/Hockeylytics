@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '+zxfadf=r)m6t=vghd2a#=%6h&2nv#+-%(vxcf0*(!(i!lu3yy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['https://hockeylytics.herokuapp.com/',
                  'https://hockeylytics.net']
