@@ -125,7 +125,7 @@ USE_TZ = True
 
 # In every app, look for a folder with this name for static files
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # This tells django where to look for static files AFTER first looking for a static folder in the app
 STATICFILES_DIRS = [
