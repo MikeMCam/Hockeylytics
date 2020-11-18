@@ -78,8 +78,11 @@ WSGI_APPLICATION = 'hockeylytics.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd4dd4p5pfq96sr',
+        'USER': 'ldycezotjjanxq',
+        'PASSWORD': '2278e4a28eb8e376e667f68c8e9578e91a15158ec2a0322ca29a95e8223689fb',
+        'HOST': 'ec2-54-166-114-48.compute-1.amazonaws.com',
     }
 }
 
