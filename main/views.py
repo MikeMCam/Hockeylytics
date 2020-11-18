@@ -21,10 +21,8 @@ posts = [
 
 
 def home(request):
-    context = {
-        'posts': Post.objects.all()
-    }
-    return render(request, 'main/home.html', context)
+
+    return render(request, 'main/home.html', {'title': 'Home'})
 
 
 def news(request):
@@ -42,3 +40,10 @@ def my_stats(request):
 def clients(request):
     return render(request, 'main/clients.html', {'title': 'Clients'})
 
+
+def feedback(request):
+    context = {
+        'posts': Post.objects.all(),
+        'title': 'Feedback',
+    }
+    return render(request, 'main/feedback.html', context)
