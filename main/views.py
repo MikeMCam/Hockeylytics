@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView)
 from .models import Post, Team, PlayerList, Match, Stats
@@ -88,8 +89,10 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 # --------------------------------------- COACH VIEWS ------------------------------------------------------------------
 def coach_dashboard(request):
-    
-    return render(request, 'main/coach_dashboard.html', {'title': 'Dashboard'})
+    context = {
+        'title': 'Dashboard',
+    }
+    return render(request, 'main/coach_dashboard.html', context)
 
 
 def invite_players(request):
