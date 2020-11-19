@@ -1,10 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+import uuid
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    unique_id = models.UUIDField(primary_key=True,
+                                 default=uuid.uuid4,
+                                 editable=False)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     COACH = 'CH'

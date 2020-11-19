@@ -27,13 +27,4 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email']
-
-
-class ProfileUpdateForm(forms.ModelForm):
-    CHOICES = [('CH', 'Coach'), ('PR', 'Player')]
-    user_type = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
-
-    class Meta:
-        model = Profile
-        fields = ['image', 'user_type']
+        fields = ['first_name', 'last_name', 'username', 'email']
