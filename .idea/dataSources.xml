@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="db" uuid="899fb08b-9f79-4222-b971-62abe99ba637">
-      <driver-ref>sqlite.xerial</driver-ref>
+    <data-source source="LOCAL" name="d4dd4p5pfq96sr@ec2-54-166-114-48.compute-1.amazonaws.com" uuid="69e0952a-7360-4233-abfa-c125ff8142bb">
+      <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:F:\Django\Hockeylytics\hockeylytics\db.sqlite3</jdbc-url>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ec2-54-166-114-48.compute-1.amazonaws.com:5432/d4dd4p5pfq96sr</jdbc-url>
     </data-source>
   </component>
 </project>
