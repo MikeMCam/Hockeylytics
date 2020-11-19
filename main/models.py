@@ -21,9 +21,13 @@ class Post(models.Model):
 class Team(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     coach = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
     country = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 
 # Team roster
@@ -33,6 +37,9 @@ class PlayerList(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     join_date = models.DateTimeField()
     leave_date = models.DateTimeField()
+
+    def __str__(self):
+        return f'{self.team} | {self.player}'
 
 
 class Match(models.Model):
@@ -44,6 +51,9 @@ class Match(models.Model):
     homePoints = models.IntegerField(default=0)
     awayGoals = models.IntegerField(default=0)
     awayPoints = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.homeTeam} vs. {self.awayTeam}'
 
 
 class Stats(models.Model):
@@ -80,3 +90,6 @@ class Stats(models.Model):
     sog = models.IntegerField(blank=True)
     fow = models.IntegerField(blank=True)
     pim = models.IntegerField(blank=True)
+
+    def __str__(self):
+        return f'{self.match} | {self.player}'
