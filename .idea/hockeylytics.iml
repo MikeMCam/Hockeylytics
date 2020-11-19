@@ -15,7 +15,11 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <orderEntry type="inheritedJdk" />
+=======
+    <orderEntry type="jdk" jdkName="Python 3.8 (hockeylytics)" jdkType="Python SDK" />
+>>>>>>> Stashed changes
 =======
     <orderEntry type="jdk" jdkName="Python 3.8 (hockeylytics)" jdkType="Python SDK" />
 >>>>>>> Stashed changes
