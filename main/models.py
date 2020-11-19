@@ -36,7 +36,7 @@ class PlayerList(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     join_date = models.DateTimeField()
-    leave_date = models.DateTimeField()
+    leave_date = models.DateTimeField(blank=True)
 
     def __str__(self):
         return f'{self.team} | {self.player}'
@@ -58,7 +58,7 @@ class Match(models.Model):
 
 class Stats(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    match = models.ForeignKey(Team, on_delete=models.CASCADE)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE)
     player = models.ForeignKey(User, on_delete=models.CASCADE)
 
     FORWARD = 'FWD'

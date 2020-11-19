@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView)
-from .models import Post
+from .models import Post, Team, PlayerList, Match, Stats
+from plotly.graph_objs import Scatter, Figure, Bar, Pie, Sunburst
+from plotly.offline import plot
 # from django.http import HttpResponse
 
 
@@ -86,6 +88,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 # --------------------------------------- COACH VIEWS ------------------------------------------------------------------
 def coach_dashboard(request):
+    
     return render(request, 'main/coach_dashboard.html', {'title': 'Dashboard'})
 
 
