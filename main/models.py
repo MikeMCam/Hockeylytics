@@ -77,19 +77,18 @@ class Stats(models.Model):
         default=FORWARD,
     )
 
-    goals = models.IntegerField(blank=True)
-    points = models.IntegerField(blank=True)
-    fow = models.IntegerField(blank=True)
-    fol = models.IntegerField(blank=True)
-    ppg = models.IntegerField(blank=True)
-    shg = models.IntegerField(blank=True)
-    assists = models.IntegerField(blank=True)
-    foPercent = models.FloatField(blank=True)
-    shootingPercent = models.FloatField(blank=True)
-    toi = models.IntegerField(blank=True)
-    sog = models.IntegerField(blank=True)
-    fow = models.IntegerField(blank=True)
-    pim = models.IntegerField(blank=True)
+    goals = models.IntegerField(blank=True, null=True)
+    points = models.IntegerField(blank=True, null=True)
+    fow = models.IntegerField(blank=True, null=True)
+    fol = models.IntegerField(blank=True, null=True)
+    ppg = models.IntegerField(blank=True, null=True)
+    shg = models.IntegerField(blank=True, null=True)
+    assists = models.IntegerField(blank=True, null=True)
+    foPercent = models.FloatField(blank=True, null=True)
+    shootingPercent = models.FloatField(blank=True, null=True)
+    toi = models.IntegerField(blank=True, null=True)
+    sog = models.IntegerField(blank=True, null=True)
+    pim = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.match} | {self.player}'
