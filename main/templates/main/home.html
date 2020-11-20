@@ -1,10 +1,36 @@
 {% extends "main/base.html" %}
 {% block content %}
-    <img src="/media/main/Goal-background.jpg"  width=100% width=100 alt="" ><br>
+    <img src="/media/main/home-image.jpg"  width=100% width=100 alt="" ><br><br>
 
     <div>
     <h5 style="text-align: center;margin-left: auto; margin-right: auto;color: #0C3C60" >DEVELOPING INNOVATIVE STRATEGIES WITH PERFORMANCE DATA</h5>
-    <h3 style=" color: #0C3C60;font-size: 50px;margin-left: auto; margin-right: auto" >Player Statistic</h3>
-    </div>
+    <h3 style="text-align: center; color: #0C3C60;font-size: 50px;margin-left: auto; margin-right: auto" >Player Statistic</h3>
+    </div><br>
 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm d-flex">
+                <div class="card card-body flex-fill home-text-box">
+                    <h3 CLASS="in-button">News</h3><br>
+                    <p class="in-button">Keep up with the NHL's twitter feed with just a click of a button</p><br>
+                    <button class="align-self-end button-ext"><a href="{% url 'news' %}">More Info</a></button>
+                </div>
+            </div>
+            <div class="col-sm d-flex">
+                <div class="card card-body flex-fill home-text-box">
+                    <h3 CLASS="in-button">About</h3><br>
+                    <p class="in-button">Learn more about the site's developers</p><br>
+                    <button class="align-self-end button-ext"><a href="{% url 'about' %}">More Info</a></button>
+                </div>
+            </div>
+            <div class="col-sm d-flex">
+                <div class="card card-body flex-fill home-text-box">
+                    <h3 CLASS="in-button">CLIENTS</h3><br>
+                    <p class="in-button">You can check out our potential investors here</p><br>
+                    <button class="align-self-end button-ext"><a href="{% url 'clients' %}">More Info</a></button>
+                </div>
+            </div>
+            </div>
+
+    </div>
 {% endblock content %}

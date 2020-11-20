@@ -1,6 +1,4 @@
 <!-- This is the base template for all pages -->
-
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -17,9 +15,9 @@
     <link rel="shortcut icon" type="image/png" href="{%  static '/main/favicon.ico' %}">
 
     {% if title %}
-    <title>{{ title }} | Hockeylytics</title>
+        <title>{{ title }} | Hockeylytics</title>
     {% else %}
-    <title>Hockeylytics</title>
+        <title>Hockeylytics</title>
     {% endif %}
 
 
@@ -71,21 +69,26 @@
         </div>
     </nav>
 </header>
-<main role="main" class="container">
+<main role="main" class="container" style="padding-bottom: 50px">
     <div class="row">
         <div class="col-md-12">
             {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
-            {% endfor %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             {% endif %}
             {% block content %}{% endblock %}
         </div>
     </div>
 </main>
 
+<footer class="page-footer font-small indigo">
+    <div class="copyright">
+        Hockeylytics &copy; 2020
+    </div>
+</footer>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

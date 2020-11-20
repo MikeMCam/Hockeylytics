@@ -1,6 +1,34 @@
 {% extends "main/base.html" %}
 {% block content %}
-    <div style="text-align: center; margin:20px">
-        {{ plot_div | safe }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Choose a team: <button type="button" class="btn btn-dark" align="right" style="border-radius: 0 !important;">Add a Team</button></h3>
+
+                <div class="input-group mb-3">
+                    <select class="custom-select" id="inputGroupSelect01">
+                        <option selected>Choose...</option>
+                        <option value="1">Carolina Raptors - Men's Hockey 2020</option>
+                        <option value="2">Carolina Raptors - Men's Hockey 2019</option>
+                        <option value="3">New York Knights - Men's Hockey 2018</option>
+                    </select>
+                </div>
+
+                <h3>Team Roster: <button type="button" class="btn btn-dark" align="right" style="border-radius: 0 !important;">Add a Player</button></h3>
+
+                <div class="input-group mb-3">
+                    <select class="custom-select" id="inputGroupSelect01">
+                        <option selected>Choose...</option>
+                        <option value="1">Wayne Gretzky</option>
+                        <option value="2">Gordie Howie</option>
+                        <option value="3">Bobby Orr</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <img src="/media/main/graph-example.png"   class="rounded mx-auto d-block img-thumbnail img-fluid" style="height: 500px; width: 500px" alt="Responsive image"><br>
+            </div>
+        </div>
+
     </div>
 {% endblock content %}

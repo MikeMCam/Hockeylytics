@@ -11,6 +11,9 @@ h1, h2, h3, h4, h5, h6 {
 ul {
   margin: 0;
 }
+a{
+  color: white;
+}
 
 .bg-steel {
   background-color: #5f788a;
@@ -90,4 +93,48 @@ a.article-title:hover {
   width: 50%;
   width:auto;
   height:auto;
+}
+
+.copyright{
+  color:white;
+  text-align: left;
+  font-size: 12px;
+}
+
+footer{
+  position: absolute;
+  bottom: 0;
+  background-color: #0C3C60;
+  margin-bottom:0;
+  height:30px;
+  padding:20px;
+  border-top: 3px;
+}
+
+.home-text-box{
+  background-color: #0C3C60;
+  padding: 30px;
+}
+
+.button-ext{
+  background-color: #0C3C60;
+  height:40px;
+  width: 110px;
+  margin-left:auto;
+  margin-right: auto;
+  margin-top: auto;
+
+  color: white;
+  align-self: center;
+  border-radius: 5px;
+}
+.in-button{
+  color:white;
+  text-align: center;
+
+}
+.button-ext:hover{
+  background-color: white;
+  color: #0C3C60;
+transition: all .5s ease-in-out;
 }
