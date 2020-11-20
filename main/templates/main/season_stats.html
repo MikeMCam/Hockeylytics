@@ -1,4 +1,68 @@
 {% extends "main/base.html" %}
 {% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Pick a Time Period:</h3>
 
+                <div class="input-group mb-3">
+                    <select class="custom-select" id="inputGroupSelect01">
+                        <option selected>Choose...</option>
+                        <option value="1">2019 - 2020</option>
+                        <option value="2">2018 - 2019</option>
+                        <option value="3">2017 - 2018</option>
+                    </select>
+                </div>
+
+                <h3>Your Position:</h3>
+
+                <div class="input-group mb-3">
+                    <select class="custom-select" id="inputGroupSelect01">
+                        <option selected>Choose...</option>
+                        <option value="1">Forward</option>
+                        <option value="2">Defense</option>
+                        <option value="3">Center</option>
+                        <option value="4">Goalie</option>
+                    </select>
+                </div>
+
+                <h3>Your Stats:</h3>
+
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Stats</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Average</th>
+                        <th scope="col">High</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Goals</th>
+                        <td>90</td>
+                        <td>2.30</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Points</th>
+                        <td>70</td>
+                        <td>1.56</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TOI</th>
+                        <td>25:42:45</td>
+                        <td>22:06</td>
+                        <td>26:01</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col-md-8">
+                <img src="/media/main/graph-example.png"   class="rounded mx-auto d-block img-thumbnail img-fluid" style="height: 500px; width: 500px" alt="Responsive image"><br>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
