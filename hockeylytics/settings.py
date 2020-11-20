@@ -149,4 +149,5 @@ LOGIN_URL = 'login'
 
 django_heroku.settings(locals())
 
-SECURE_SSL_REDIRECT = True
+# Turn off during production otherwise it won't run
+SECURE_SSL_REDIRECT = False
