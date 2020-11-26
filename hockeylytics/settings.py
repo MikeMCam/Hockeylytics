@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['https://hockeylytics.herokuapp.com/',
 INSTALLED_APPS = [
     'main.apps.MainConfig',   # lets django find templates and data tables
     'users.apps.UsersConfig',
+    'blog.apps.BlogConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -113,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 
