@@ -24,9 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '+zxfadf=r)m6t=vghd2a#=%6h&2nv#+-%(vxcf0*(!(i!lu3yy'
 
 ALLOWED_HOSTS = ['https://hockeylytics.herokuapp.com/',
-                 'https://hockeylytics.net/',
-                 'http://hockeylytics.net/',
-                 'www.hockeylytics.net/']
+                 '.hockeylytics.net']
 
 
 # Application definition
