@@ -23,8 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '+zxfadf=r)m6t=vghd2a#=%6h&2nv#+-%(vxcf0*(!(i!lu3yy'
 
-ALLOWED_HOSTS = ['https://hockeylytics.herokuapp.com/',
-                 '.hockeylytics.net']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

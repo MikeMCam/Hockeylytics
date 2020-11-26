@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="de9e8cc9-240b-4d52-b7cb-408210538185" name="Default Changelist" comment="" />
+    <list default="true" id="de9e8cc9-240b-4d52-b7cb-408210538185" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/hockeylytics/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/hockeylytics/settings.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -97,7 +99,7 @@
       <workItem from="1605884207470" duration="7495000" />
       <workItem from="1605908989834" duration="1321000" />
       <workItem from="1606249345189" duration="6871000" />
-      <workItem from="1606353223173" duration="6441000" />
+      <workItem from="1606353223173" duration="6889000" />
     </task>
     <servers />
   </component>
