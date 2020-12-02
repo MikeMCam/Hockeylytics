@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de9e8cc9-240b-4d52-b7cb-408210538185" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hockeylytics/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/hockeylytics/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hockeylytics/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/hockeylytics/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/enter_game.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/enter_game.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/staticfiles/staticfiles.json" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/staticfiles.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/templates/users/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/users/templates/users/login.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,9 +22,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="CSS File" />
         <option value="Python Script" />
         <option value="HTML File" />
-        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -37,7 +44,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../project-1/project1" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -63,7 +70,7 @@
         <env name="PYTHONUNBUFFERED" value="1" />
         <env name="DJANGO_SETTINGS_MODULE" value="hockeylytics.settings" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="D:\Users\dell\Documents\Anaconda3\envs\hockeylytics\python.exe" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -99,7 +106,14 @@
       <workItem from="1605884207470" duration="7495000" />
       <workItem from="1605908989834" duration="1321000" />
       <workItem from="1606249345189" duration="6871000" />
-      <workItem from="1606353223173" duration="6889000" />
+      <workItem from="1606353223173" duration="9390000" />
+      <workItem from="1606811290997" duration="882000" />
+      <workItem from="1606812189356" duration="2455000" />
+      <workItem from="1606814784631" duration="265000" />
+      <workItem from="1606815064038" duration="1282000" />
+      <workItem from="1606873517951" duration="1878000" />
+      <workItem from="1606930287398" duration="4507000" />
+      <workItem from="1606950844885" duration="1234000" />
     </task>
     <servers />
   </component>
@@ -107,14 +121,18 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="718" y="129" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605811803386">
+    <state x="718" y="129" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606815074672">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="718" y="129" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605811803386" />
+    <state x="718" y="129" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1606815074672" />
     <state x="1205" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1605725543873">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1205" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1605725543873" />
+    <state x="1131" y="241" width="469" height="489" key="EnvironmentVariablesDialog" timestamp="1606815072550">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1131" y="241" width="469" height="489" key="EnvironmentVariablesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1606815072550" />
     <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1605206960655">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -147,5 +165,16 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1099" y="229" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605810144764" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/users/forms.py</url>
+          <line>3</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

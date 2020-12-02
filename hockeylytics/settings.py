@@ -1,3 +1,5 @@
+# ENV Variables: HOCKEY_SKEY, EMAIL_USER, EMAIL_PASS
+
 """
 Django settings for hockeylytics project.
 
@@ -21,9 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+zxfadf=r)m6t=vghd2a#=%6h&2nv#+-%(vxcf0*(!(i!lu3yy'
+SECRET_KEY = os.environ['HOCKEY_SKEY']
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['hockeylytics.net',
+                 'www.hockeylytics.net']
 
 
 # Application definition
@@ -128,7 +131,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # This tells django where to look for static files AFTER first looking for a static folder in the app
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "static/",
 ]
 
 # In every app, look for a folder with this name for static files
@@ -151,3 +154,15 @@ SECURE_SSL_REDIRECT = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+# Allows password reset via email to work
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+
+# Tells the browser to not send cookies unless via HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
