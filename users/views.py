@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, UserTypeForm
+from .forms import UserRegisterForm, UserUpdateForm, UserTypeForm, UserDeleteForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -46,3 +46,23 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
+
+
+# View for deleting user from account settings
+@login_required
+def account_settings(request):
+    if request.method == 'POST':
+        form = UserDeleteForm(request.POST, instance=request.user)
+        user = request.user
+        user.delete()
+        messages.success(request, f'Your account has been deleted')
+        return redirect('home')
+    else:
+        form = UserDeleteForm(instance=request.user)
+
+    context = {
+        'title': 'Account Settings',
+        'form': form,
+    }
+
+    return render(request, 'users/account_settings.html', context)

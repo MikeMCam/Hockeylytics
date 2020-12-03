@@ -30,8 +30,8 @@ class PlayerList(models.Model):
 class Match(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     date = models.DateTimeField()
-    homeTeam = models.ForeignKey(Team, null=True, related_name='home_team', on_delete=models.CASCADE)
-    awayTeam = models.ForeignKey(Team, null=True, related_name='away_team', on_delete=models.CASCADE)
+    homeTeam = models.ForeignKey(Team, null=True, related_name='home_team', on_delete=models.SET_NULL)
+    awayTeam = models.ForeignKey(Team, null=True, related_name='away_team', on_delete=models.SET_NULL)
     homeGoals = models.IntegerField(default=0)
     homePoints = models.IntegerField(default=0)
     awayGoals = models.IntegerField(default=0)
