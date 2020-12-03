@@ -45,7 +45,14 @@ def coach_dashboard(request):
 
 @login_required()
 def invite_players(request):
-    return render(request, 'main/invite_players.html', {'title': 'Invite Players'})
+    user = request.user
+    teamList = Team.objects.get(coach=user)
+
+    context = {
+        'title': 'Invite Players',
+        'team_list': teamList,
+    }
+    return render(request, 'main/invite_players.html', context)
 
 
 @login_required()

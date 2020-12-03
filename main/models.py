@@ -3,6 +3,15 @@ from django.contrib.auth.models import User
 import uuid
 
 
+class Dummy(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    firstName = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'{self.firstName} {self.lastName} Dummy'
+
+
 class Team(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     coach = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -19,12 +28,14 @@ class Team(models.Model):
 class PlayerList(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    player = models.ForeignKey(User, on_delete=models.CASCADE)
+    player = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     join_date = models.DateTimeField()
-    leave_date = models.DateTimeField(blank=True)
+    leave_date = models.DateTimeField(blank=True, null=True)
+    isDummy = models.BooleanField(default=True)
+    dummy = models.ForeignKey(Dummy, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.team} | {self.player}'
+        return f'{self.team} | {self.player} | {self.dummy}'
 
 
 class Match(models.Model):
@@ -44,7 +55,9 @@ class Match(models.Model):
 class Stats(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
-    player = models.ForeignKey(User, on_delete=models.CASCADE)
+    player = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    isDummy = models.BooleanField(default=True)
+    dummy = models.ForeignKey(Dummy, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     FORWARD = 'FWD'
     DEFENSE = 'DEF'
@@ -76,4 +89,4 @@ class Stats(models.Model):
     pim = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.match} | {self.player}'
+        return f'{self.match} | {self.player} | {self.dummy}'
