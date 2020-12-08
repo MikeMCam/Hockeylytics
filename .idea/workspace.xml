@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de9e8cc9-240b-4d52-b7cb-408210538185" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hockeylytics/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/hockeylytics/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/invite_players.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/invite_players.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +111,7 @@
       <workItem from="1607115812676" duration="5572000" />
       <workItem from="1607345961390" duration="5072000" />
       <workItem from="1607389310315" duration="13646000" />
-      <workItem from="1607448424910" duration="999000" />
+      <workItem from="1607448424910" duration="1015000" />
     </task>
     <servers />
   </component>
