@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 import django_heroku
 from pathlib import Path
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -166,3 +167,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 # Tells the browser to not send cookies unless via HTTPS
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}

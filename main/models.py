@@ -7,6 +7,7 @@ class Dummy(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     firstName = models.CharField(max_length=50)
     lastName = models.CharField(max_length=50)
+    createdBy = models.ForeignKey(User, on_delete=models.CASCADE, null=True, default=None)
 
     def __str__(self):
         return f'{self.firstName} {self.lastName} Dummy'

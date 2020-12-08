@@ -4,8 +4,8 @@
     <list default="true" id="de9e8cc9-240b-4d52-b7cb-408210538185" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hockeylytics/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/hockeylytics/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/invite_players.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/invite_players.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -111,7 +111,11 @@
       <workItem from="1606873517951" duration="1878000" />
       <workItem from="1606930287398" duration="4507000" />
       <workItem from="1606950844885" duration="9381000" />
-      <workItem from="1607015208635" duration="9452000" />
+      <workItem from="1607015208635" duration="10875000" />
+      <workItem from="1607115812676" duration="5572000" />
+      <workItem from="1607345961390" duration="5072000" />
+      <workItem from="1607389310315" duration="13646000" />
+      <workItem from="1607448424910" duration="999000" />
     </task>
     <servers />
   </component>
