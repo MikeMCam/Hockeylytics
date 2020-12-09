@@ -1,27 +1,111 @@
 {% extends "main/base.html" %}
 {% block content %}
+    <!-- Prevents users from entering in a space (used for first name last name fields in player creation) -->
+    <script type="text/javascript">
+        function blockSpecialChar(e) {
+            var k = e.keyCode;
+            return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8   || (k >= 48 && k <= 57));
+        }
+    </script>
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <h3>Choose a team: <button type="button" class="btn btn-dark" align="right" style="border-radius: 0 !important;">Add a Team</button></h3>
+                <!-- Team Creation Modal -->
+                <form method="POST">
+                    {% csrf_token %}
+                    <!-- Triggers a Modal -->
+                    <div class="row">
+                        <h3>Choose a team: <button type="button" class="btn btn-dark" align="right" id ="myBtn"
+                                                   data-toggle="modal" data-target="#myModal" style="border-radius: 0 !important;">Add a Team</button></h3>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <h4 class="modal-title" style="margin-bottom: 10px"><b>Create a Team</b></h4>
+                                    <h6>Name:</h6>
+                                    <input maxlength="100" style="margin-bottom: 10px" class="form-control" id="nameField" name="nameField" placeholder="">
+                                    <h6>Country:</h6>
+                                    <input maxlength="50" style="margin-bottom: 10px" class="form-control" id="countryField" name="countryField" placeholder="">
+                                    <h6>State:</h6>
+                                    <input maxlength="50" style="margin-bottom: 10px" class="form-control" id="stateField" name="stateField" placeholder="">
+                                    <h6>City:</h6>
+                                    <input maxlength="50" style="margin-bottom: 10px" class="form-control" id="cityField" name="cityField" placeholder="">
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-info" type="button" data-dismiss="modal">Cancel</button>
+                                    <button class="btn btn-success" name = "teamSubmit" type="submit">Create Team</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form method="GET">
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="teamDropdown" name="teamDropdown" onchange="form.submit()">
+                            {% if team == None %}
+                                <option selected>---</option>
+                            {% else %}
+                                <option selected>{{ team }}</option>
+                            {% endif %}
+                            {% for team in team_list %}
+                                <option value="{{ team.name }}">{{ team.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </form>
 
+                <!-- Player Creation Modal -->
+                <form method="POST">
+                    {% csrf_token %}
+                    <!-- Triggers a Modal -->
+                    <div class="row">
+                        <h3>Team Roster:<button type="button" class="btn btn-dark" id="playerBtn"
+                                                 data-toggle="modal" data-target="#playerModal" align="right" style="border-radius: 0 !important;">Add a Player</button></h3>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="playerModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <h4 class="modal-title" style="margin-bottom: 10px"><b>Add a Player</b></h4>
+                                    <h6>Team:</h6>
+                                    <select class="custom-select" id="playerTeam" name="playerTeam" style="margin-bottom: 10px">
+                                        {% if team == None %}
+                                            <option selected>---</option>
+                                        {% else %}
+                                            <option selected>{{ team }}</option>
+                                        {% endif %}
+                                        {% for team in team_list %}
+                                            <option value="{{ team.name }}">{{ team.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <h6>First Name:</h6>
+                                    <input onkeypress="return blockSpecialChar(event)" maxlength="50" style="margin-bottom: 10px" class="form-control" id="playerFirstName" name="playerFirstName" autocomplete="off" placeholder="">
+                                    <h6>Last Name:</h6>
+                                    <input onkeypress="return blockSpecialChar(event)" maxlength="50" style="margin-bottom: 10px" class="form-control" id="playerLastName" name="playerLastName" autocomplete="off" placeholder="">
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-info" type="button" data-dismiss="modal">Cancel</button>
+                                    <button class="btn btn-success" name = "playerSubmit" type="submit">Add Player</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
                 <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>Choose...</option>
-                        <option value="1">Carolina Raptors - Men's Hockey 2020</option>
-                        <option value="2">Carolina Raptors - Men's Hockey 2019</option>
-                        <option value="3">New York Knights - Men's Hockey 2018</option>
-                    </select>
-                </div>
-
-                <h3>Team Roster: <button type="button" class="btn btn-dark" align="right" style="border-radius: 0 !important;">Add a Player</button></h3>
-
-                <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>Choose...</option>
-                        <option value="1">Wayne Gretzky</option>
-                        <option value="2">Gordie Howie</option>
-                        <option value="3">Bobby Orr</option>
+                    <select class="custom-select" id="roster">
+                        <option selected>---</option>
+                        {% for player in roster %}
+                            {% if player.isDummy == True %}
+                                <option value="{{ player.dummy }}">{{ player.dummy }}</option>
+                            {% else %}
+                                <option value="{{ player.player }}">{{ player.player.first_name }} {{ player.player.last_name }}</option>
+                            {% endif %}
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -29,5 +113,44 @@
                 <img src="/media/main/graph-example.png"   class="rounded mx-auto d-block img-thumbnail img-fluid" style="height: 500px; width: 500px" alt="Responsive image"><br>
             </div>
         </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                <!-- Triggers a Modal -->
+                <div class="row">
+                    <button type="button" class="btn btn-danger" id="deleteBtn"
+                            data-toggle="modal" data-target="#deleteModal" align="right" style="border-radius: 0 !important;">Delete a Team</button>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="deleteModal" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <h4 class="modal-title" style="margin-bottom: 10px"><b>Delete a Team</b></h4>
+                                <h6>Team:</h6>
+                                <select class="custom-select" id="deleteTeam" name="deleteTeam" style="margin-bottom: 10px">
+                                    {% if team == None %}
+                                        <option selected>---</option>
+                                    {% else %}
+                                        <option selected>{{ team }}</option>
+                                    {% endif %}
+                                    {% for team in team_list %}
+                                        <option value="{{ team.name }}">{{ team.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <h6>Are you sure you want to delete this team?</h6>
+                                <h6 style="color: red">This action cannot be undone.</h6>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-info" type="button" data-dismiss="modal">Cancel</button>
+                                <button class="btn btn-danger" name = "deleteTeamSubmit" type="deleteTeamSubmit">Delete Team</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 {% endblock content %}

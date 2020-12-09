@@ -40,28 +40,86 @@
                     <tbody>
                     <tr>
                         <th scope="row">Goals</th>
-                        <td>90</td>
-                        <td>2.30</td>
-                        <td>6</td>
+                        <td>{{ user_goals }}</td>
+                        <td>{{ ave_goals }}</td>
+                        <td>{{ high_goals }}</td>
                     </tr>
                     <tr>
                         <th scope="row">Points</th>
-                        <td>70</td>
-                        <td>1.56</td>
-                        <td>7</td>
+                        <td>{{ user_points }}</td>
+                        <td>{{ ave_points }}</td>
+                        <td>{{ high_points }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">FOW</th>
+                        <td>{{ user_fow }}</td>
+                        <td>{{ ave_fow }}</td>
+                        <td>{{ high_fow }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">FOL</th>
+                        <td>{{ user_fol }}</td>
+                        <td>{{ ave_fol }}</td>
+                        <td>{{ high_fol }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">PPG</th>
+                        <td>{{ user_ppg }}</td>
+                        <td>{{ ave_ppg }}</td>
+                        <td>{{ high_ppg }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">SHG</th>
+                        <td>{{ user_shg }}</td>
+                        <td>{{ ave_shg }}</td>
+                        <td>{{ high_shg }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ASSISTS</th>
+                        <td>{{ user_assists }}</td>
+                        <td>{{ ave_assists }}</td>
+                        <td>{{ high_assists }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">FoPERCENT</th>
+                        <td>{{ user_foPercent }}</td>
+                        <td>{{ ave_foPercent }}</td>
+                        <td>{{ high_foPercent }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">SHOOTINGPERCENT</th>
+                        <td>{{ user_shootingPercent }}</td>
+                        <td>{{ ave_shootingPercent }}</td>
+                        <td>{{ high_shootingPercent }}</td>
                     </tr>
                     <tr>
                         <th scope="row">TOI</th>
-                        <td>25:42:45</td>
-                        <td>22:06</td>
-                        <td>26:01</td>
+                        <td>{{ user_toi }}</td>
+                        <td>{{ ave_toi }}</td>
+                        <td>{{ high_toi }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">SOG</th>
+                        <td>{{ user_sog }}</td>
+                        <td>{{ ave_sog }}</td>
+                        <td>{{ high_sog }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">PIM</th>
+                        <td>{{ user_pim }}</td>
+                        <td>{{ ave_pim }}</td>
+                        <td>{{ high_pim }}</td>
                     </tr>
                     </tbody>
                 </table>
 
             </div>
             <div class="col-md-8">
-                <img src="/media/main/graph-example.png"   class="rounded mx-auto d-block img-thumbnail img-fluid" style="height: 500px; width: 500px" alt="Responsive image"><br>
+                <div>
+                    <a href="https://plotly.com/~ttran79/3/?share_key=ijbVgtyiPuAx54cMMyqw5q" target="_blank" title="Plot 3" style="display: block; text-align: center;"><img src="https://plotly.com/~ttran79/3.png?share_key=ijbVgtyiPuAx54cMMyqw5q" alt="Plot 3" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
+                    <script data-plotly="ttran79:3" sharekey-plotly="ijbVgtyiPuAx54cMMyqw5q" src="https://plotly.com/embed.js" async></script>
+                </div>
+
             </div>
         </div>
     </div>

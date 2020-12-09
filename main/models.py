@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+from django.utils import timezone
 
 
 class Dummy(models.Model):
@@ -10,7 +11,7 @@ class Dummy(models.Model):
     createdBy = models.ForeignKey(User, on_delete=models.CASCADE, null=True, default=None)
 
     def __str__(self):
-        return f'{self.firstName} {self.lastName} Dummy'
+        return f'{self.firstName} {self.lastName} (unlinked)'
 
 
 class Team(models.Model):
@@ -30,10 +31,10 @@ class PlayerList(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     player = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    join_date = models.DateTimeField()
+    join_date = models.DateTimeField(default=timezone.now, null=True)
     leave_date = models.DateTimeField(blank=True, null=True)
     isDummy = models.BooleanField(default=True)
-    dummy = models.ForeignKey(Dummy, on_delete=models.DO_NOTHING, null=True, blank=True)
+    dummy = models.ForeignKey(Dummy, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f'{self.team} | {self.player} | {self.dummy}'

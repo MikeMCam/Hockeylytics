@@ -24,7 +24,7 @@ class Profile(models.Model):
     )
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return f'{self.user.username} profile'
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
