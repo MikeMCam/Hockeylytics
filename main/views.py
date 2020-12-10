@@ -11,6 +11,7 @@ from django.http import HttpResponse
 import plotly.graph_objects as go
 import plotly.express as px
 import plotly.io as pio
+import pandas as pd
 
 
 def home(request):
@@ -50,14 +51,33 @@ def feedback(request):
 def coach_dashboard(request):
     roster = None
     team = None
+    graph = None
     if request.method == 'GET':
         if request.GET.get('teamDropdown'):
             try:
                 team = Team.objects.get(coach=request.user, name=request.GET['teamDropdown'])
                 roster = PlayerList.objects.filter(team=team)
-
+                playerList = PlayerList.objects.filter(team=team)
+                statsList = {}
+                totalTOI = 0
+                for player in playerList:
+                    if player.isDummy:
+                        stats = Stats.objects.filter(dummy=player.dummy)
+                        for stat in stats:
+                            totalTOI += stat.toi
+                        statsList.update({f'{player.dummy.firstName} {player.dummy.lastName}': totalTOI})
+                        totalTOI = 0
+                    else:
+                        stats = Stats.objects.filter(player=player.player)
+                        for stat in stats:
+                            totalTOI += stat.toi
+                        statsList.update({f'{player.player.first_name} {player.player.last_name}': totalTOI})
+                        totalTOI = 0
             except ObjectDoesNotExist:
                 pass
+            df = pd.DataFrame(list(statsList.items()), columns=['Team Players', 'TOI'])
+            fig = px.scatter(df, x="Team Players", y="TOI", template='plotly_dark')
+            graph = fig.to_html(full_html=False, default_height=500, default_width=700)
 
     # Delete team button
     if request.method == 'POST' and request.POST.get('deleteTeamSubmit') is not None:
@@ -163,11 +183,7 @@ def coach_dashboard(request):
     except ObjectDoesNotExist:
         team_list = None
 
-    # ------------------------------------------------- PLOTLY ---------------------------------------------------------
-    df = px.data.iris()
-    fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species", template='plotly_dark')
-    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
-
+# ------------------------------------------------- PLOTLY ---------------------------------------------------------
     context = {
         'title': 'Dashboard',
         'team_list': team_list,
