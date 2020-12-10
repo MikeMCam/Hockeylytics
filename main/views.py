@@ -8,6 +8,7 @@ from .forms import TeamCreateForm
 from django.core.exceptions import ObjectDoesNotExist, ValidationError, MultipleObjectsReturned
 from django.http import JsonResponse
 from django.http import HttpResponse
+import plotly.graph_objects as go
 
 
 def home(request):
@@ -159,12 +160,15 @@ def coach_dashboard(request):
         team_list = Team.objects.filter(coach=request.user)
     except ObjectDoesNotExist:
         team_list = None
-    
+
+    fig = go.Figure(data=go.Bar(y=[2, 3, 1]))
+    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
     context = {
         'title': 'Dashboard',
         'team_list': team_list,
         'roster': roster,
         'team': team,
+        'graph': graph,
     }
     return render(request, 'main/coach_dashboard.html', context)
 
@@ -263,6 +267,7 @@ def enter_game(request):
     if request.method == 'POST':
         form = TeamCreateForm(request.POST)
         if form.is_valid():
+            form.instance.createdBy = request.user
             form.save()
             messages.success(request, f'Match has been created')
             return redirect(coach_dashboard)
@@ -278,7 +283,19 @@ def enter_game(request):
 
 @login_required()
 def game_list(request):
-    return render(request, 'main/game_list.html', {'title': 'Games'})
+    match = None
+    if request.method == 'GET':
+        if request.GET.get('teamListDropDown'):
+            try:
+                match = Team.objects.filter(coach=request.user)
+            except ObjectDoesNotExist:
+                pass
+
+    context = {
+        'match': match,
+        'title': 'Games'}
+
+    return render(request, 'main/game_list.html', context)
 
 
 # --------------------------------------- Player VIEWS -----------------------------------------------------------------

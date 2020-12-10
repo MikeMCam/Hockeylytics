@@ -43,6 +43,18 @@ class PlayerList(models.Model):
 class Match(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     date = models.DateTimeField()
+    createdBy = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, default=None)
+    AWAY = 'AW'
+    HOME = 'HO'
+    USER_TYPE_CHOICES = [
+        (AWAY, 'Away'),
+        (HOME, 'Home'),
+    ]
+    yourTeam = models.CharField(
+        max_length=2,
+        choices=USER_TYPE_CHOICES,
+        default=AWAY,
+    )
     homeTeam = models.ForeignKey(Team, null=True, related_name='home_team', on_delete=models.SET_NULL)
     awayTeam = models.ForeignKey(Team, null=True, related_name='away_team', on_delete=models.SET_NULL)
     homeGoals = models.IntegerField(default=0)

@@ -110,7 +110,11 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <img src="/media/main/graph-example.png"   class="rounded mx-auto d-block img-thumbnail img-fluid" style="height: 500px; width: 500px" alt="Responsive image"><br>
+                {% if graph %}
+                    {{ graph | safe }}
+                {% else %}
+                    <p>no graph provided</p>
+                {% endif %}
             </div>
         </div>
 
