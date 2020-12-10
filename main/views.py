@@ -9,6 +9,8 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError, Multiple
 from django.http import JsonResponse
 from django.http import HttpResponse
 import plotly.graph_objects as go
+import plotly.express as px
+import plotly.io as pio
 
 
 def home(request):
@@ -161,8 +163,11 @@ def coach_dashboard(request):
     except ObjectDoesNotExist:
         team_list = None
 
-    fig = go.Figure(data=go.Bar(y=[2, 3, 1]))
+    # ------------------------------------------------- PLOTLY ---------------------------------------------------------
+    df = px.data.iris()
+    fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species", template='plotly_dark')
     graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
     context = {
         'title': 'Dashboard',
         'team_list': team_list,
