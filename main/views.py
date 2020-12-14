@@ -12,6 +12,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import plotly.io as pio
 import pandas as pd
+import datetime
 
 
 def home(request):
@@ -61,21 +62,21 @@ def coach_dashboard(request):
                 roster = PlayerList.objects.filter(team=team)
                 player_list = PlayerList.objects.filter(team=team)
                 stats_list = {}
-                total_toi = 0
+                total_toi = datetime.time()
                 for player in player_list:
                     if player.isDummy:
                         stats = Stats.objects.filter(dummy=player.dummy)
                         for stat in stats:
-                            total_toi += stat.toi
+                            total_toi = total_toi + datetime.time(second=stat.toi)
                         stats_list.update({f'{player.dummy.firstName} {player.dummy.lastName}': total_toi})
-                        total_toi = 0
+                        total_toi = datetime.time()
 
                     else:
                         stats = Stats.objects.filter(player=player.player)
                         for stat in stats:
-                            total_toi += stat.toi
+                            total_toi = total_toi + datetime.time(second=stat.toi)
                         stats_list.update({f'{player.player.first_name} {player.player.last_name}': total_toi})
-                        total_toi = 0
+                        total_toi = datetime.time()
 
             except ObjectDoesNotExist:
                 pass
