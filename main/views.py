@@ -11,6 +11,7 @@ from django.http import HttpResponse
 import plotly.graph_objects as go
 import plotly.express as px
 import plotly.io as pio
+import pandas as pd
 
 
 def home(request):
@@ -50,14 +51,38 @@ def feedback(request):
 def coach_dashboard(request):
     roster = None
     team = None
+    graph = None
+    player_list = None
+    stats_list = {}
     if request.method == 'GET':
         if request.GET.get('teamDropdown'):
             try:
                 team = Team.objects.get(coach=request.user, name=request.GET['teamDropdown'])
                 roster = PlayerList.objects.filter(team=team)
+                player_list = PlayerList.objects.filter(team=team)
+                stats_list = {}
+                total_toi = 0
+                for player in player_list:
+                    if player.isDummy:
+                        stats = Stats.objects.filter(dummy=player.dummy)
+                        for stat in stats:
+                            total_toi += stat.toi
+                        stats_list.update({f'{player.dummy.firstName} {player.dummy.lastName}': total_toi})
+                        total_toi = 0
+
+                    else:
+                        stats = Stats.objects.filter(player=player.player)
+                        for stat in stats:
+                            total_toi += stat.toi
+                        stats_list.update({f'{player.player.first_name} {player.player.last_name}': total_toi})
+                        total_toi = 0
 
             except ObjectDoesNotExist:
                 pass
+
+            df = pd.DataFrame(list(stats_list.items()), columns=['Team Players', 'TOI'])
+            fig = px.line(df, x="Team Players", y="TOI", template='plotly_dark')
+            graph = fig.to_html(full_html=False, default_height=500, default_width=700)
 
     # Delete team button
     if request.method == 'POST' and request.POST.get('deleteTeamSubmit') is not None:
@@ -135,6 +160,27 @@ def coach_dashboard(request):
                 messages.error(request, 'Please enter a last name')
                 break
 
+            # scuffed way of checking for duplicate names
+            full_name = request.POST['playerFirstName'] + " " + request.POST['playerLastName']
+            print(f'full_name = {full_name}')
+            should_break = False
+            playerList = PlayerList.objects.filter(team=Team.objects.get(coach=request.user,
+                                                                         name=request.GET['teamDropdown']))
+            for player in playerList:
+                if player.isDummy:
+                    dummy_name = player.dummy.firstName + " " + player.dummy.lastName
+                    if dummy_name == full_name:
+                        print(f'dummy_name = {dummy_name}')
+                        should_break = True
+                else:
+                    player_name = player.player.first_name + " " + player.player.last_name
+                    if player_name == full_name:
+                        print(f'player_name = {player_name}')
+                        should_break = True
+            if should_break:
+                messages.error(request, 'please enter a unique player name')
+                break
+
             try:
                 dummy = Dummy.objects.create(createdBy=request.user)
                 dummy.firstName = request.POST['playerFirstName']
@@ -164,9 +210,7 @@ def coach_dashboard(request):
         team_list = None
 
     # ------------------------------------------------- PLOTLY ---------------------------------------------------------
-    df = px.data.iris()
-    fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species", template='plotly_dark')
-    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
 
     context = {
         'title': 'Dashboard',
