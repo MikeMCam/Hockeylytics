@@ -98,7 +98,7 @@ class Stats(models.Model):
     assists = models.IntegerField(blank=True, null=True)
     foPercent = models.FloatField(blank=True, null=True)
     shootingPercent = models.FloatField(blank=True, null=True)
-    toi = models.FloatField(blank=True, null=True)
+    toi = models.TimeField(blank=True, null=True)
     sog = models.IntegerField(blank=True, null=True)
     pim = models.IntegerField(blank=True, null=True)
 
