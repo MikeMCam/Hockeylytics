@@ -13,6 +13,7 @@ lazy-object-proxy==1.4.1
 matplotlib==3.3.2
 mccabe==0.6.1
 numpy==1.19.2
+pandas==1.1.5
 Pillow==8.0.1
 plotly==4.12.0
 psycopg2==2.8.5
