@@ -52,40 +52,246 @@ def feedback(request):
 def coach_dashboard(request):
     roster = None
     team = None
+    stat_1 =None
     graph = None
-    player_list = None
+    graph_2 = None
     stats_list = {}
-    if request.method == 'GET':
-        if request.GET.get('teamDropdown'):
+
+    # -------------------------------------------- PLAYER BREAKDOWN ----------------------------------------------------
+    if request.POST.get('player-breakdown-submit') is not None:
+        print(request.POST)
+        while True:
             try:
-                team = Team.objects.get(coach=request.user, name=request.GET['teamDropdown'])
+                if request.POST.get('player-breakdown-team') == 'None':
+                    messages.error(request, 'Please select a team')
+                    break
+                if request.POST.get('player-breakdown-roster') == '---':
+                    messages.error(request, 'Please select a player')
+                    break
+                if request.POST.get('player-breakdown-stat') == '---':
+                    messages.error(request, 'Please select a stat')
+                    break
+                messages.success(request, 'We are in Player Breakdown')
+                break
+            except ObjectDoesNotExist:
+                messages.error(request, 'Player Breakdown ODNE Error')
+                break
+    # -------------------------------------------- CHOOSE A STAT -------------------------------------------------------
+    if request.GET.get('stat-select') is not None:
+        stat_1 = request.GET.get('stat-select')
+        try:
+            if request.GET.get('stat-select') == 'Goals':
+                team = Team.objects.get(coach=request.user, name=request.GET['teamChoice'])
                 roster = PlayerList.objects.filter(team=team)
                 player_list = PlayerList.objects.filter(team=team)
                 stats_list = {}
-                total_toi = datetime.time()
+                total_goals = 0
                 for player in player_list:
                     if player.isDummy:
                         stats = Stats.objects.filter(dummy=player.dummy)
                         for stat in stats:
-                            total_toi = total_toi + datetime.time(second=stat.toi)
-                        stats_list.update({f'{player.dummy.firstName} {player.dummy.lastName}': total_toi})
-                        total_toi = datetime.time()
+                            total_goals += stat.goals
+                        stats_list.update({f'{player.dummy.firstName} {player.dummy.lastName}': total_goals})
+                        total_goals = 0
 
                     else:
                         stats = Stats.objects.filter(player=player.player)
                         for stat in stats:
-                            total_toi = total_toi + datetime.time(second=stat.toi)
-                        stats_list.update({f'{player.player.first_name} {player.player.last_name}': total_toi})
-                        total_toi = datetime.time()
+                            total_goals += stat.goals
+                        stats_list.update({f'{player.player.first_name} {player.player.last_name}': total_goals})
+                        total_goals = 0
+                df = pd.DataFrame(list(stats_list.items()), columns=['Team Players', 'Goals'])
+                fig = px.scatter(df, x="Team Players", y="Goals", template='plotly_dark')
+                graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+            if request.GET.get('stat-select') == 'Assists':
+                team = Team.objects.get(coach=request.user, name=request.GET['teamChoice'])
+                roster = PlayerList.objects.filter(team=team)
+                player_list = PlayerList.objects.filter(team=team)
+                stats_list = {}
+                total_assists = 0
+                for player in player_list:
+                    if player.isDummy:
+                        stats = Stats.objects.filter(dummy=player.dummy)
+                        for stat in stats:
+                            total_assists += stat.assists
+                        stats_list.update({f'{player.dummy.firstName} {player.dummy.lastName}': total_assists})
+                        total_assists = 0
+
+                    else:
+                        stats = Stats.objects.filter(player=player.player)
+                        for stat in stats:
+                            total_assists += stat.assists
+                        stats_list.update({f'{player.player.first_name} {player.player.last_name}': total_assists})
+                        total_assists = 0
+                df = pd.DataFrame(list(stats_list.items()), columns=['Team Players', 'Assists'])
+                fig = px.scatter(df, x="Team Players", y="Assists", template='plotly_dark')
+                graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+            if request.GET.get('stat-select') == 'Points':
+                team = Team.objects.get(coach=request.user, name=request.GET['teamChoice'])
+                roster = PlayerList.objects.filter(team=team)
+                player_list = PlayerList.objects.filter(team=team)
+                stats_list = {}
+                total_points = 0
+                for player in player_list:
+                    if player.isDummy:
+                        stats = Stats.objects.filter(dummy=player.dummy)
+                        for stat in stats:
+                            total_points += stat.points
+                        stats_list.update({f'{player.dummy.firstName} {player.dummy.lastName}': total_points})
+                        total_points = 0
+
+                    else:
+                        stats = Stats.objects.filter(player=player.player)
+                        for stat in stats:
+                            total_points += stat.points
+                        stats_list.update({f'{player.player.first_name} {player.player.last_name}': total_points})
+                        total_points = 0
+                df = pd.DataFrame(list(stats_list.items()), columns=['Team Players', 'Points'])
+                fig = px.scatter(df, x="Team Players", y="Points", template='plotly_dark')
+                graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+            if request.GET.get('stat-select') == 'ppg':
+                team = Team.objects.get(coach=request.user, name=request.GET['teamChoice'])
+                roster = PlayerList.objects.filter(team=team)
+                player_list = PlayerList.objects.filter(team=team)
+                stats_list = {}
+                total_ppg = 0
+                for player in player_list:
+                    if player.isDummy:
+                        stats = Stats.objects.filter(dummy=player.dummy)
+                        for stat in stats:
+                            total_ppg += stat.ppg
+                        stats_list.update({f'{player.dummy.firstName} {player.dummy.lastName}': total_ppg})
+                        total_ppg = 0
+
+                    else:
+                        stats = Stats.objects.filter(player=player.player)
+                        for stat in stats:
+                            total_ppg += stat.ppg
+                        stats_list.update({f'{player.player.first_name} {player.player.last_name}': total_ppg})
+                        total_ppg = 0
+                df = pd.DataFrame(list(stats_list.items()), columns=['Team Players', 'Power Play Goals'])
+                fig = px.scatter(df, x="Team Players", y="Power Play Goals", template='plotly_dark')
+                graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+            if request.GET.get('stat-select') == 'ppp':
+                team = Team.objects.get(coach=request.user, name=request.GET['teamChoice'])
+                roster = PlayerList.objects.filter(team=team)
+                player_list = PlayerList.objects.filter(team=team)
+                stats_list = {}
+                total_ppp = 0
+                for player in player_list:
+                    if player.isDummy:
+                        stats = Stats.objects.filter(dummy=player.dummy)
+                        for stat in stats:
+                            total_ppp += stat.ppp
+                        stats_list.update({f'{player.dummy.firstName} {player.dummy.lastName}': total_ppp})
+                        total_ppp = 0
+
+                    else:
+                        stats = Stats.objects.filter(player=player.player)
+                        for stat in stats:
+                            total_ppp += stat.ppp
+                        stats_list.update({f'{player.player.first_name} {player.player.last_name}': total_ppp})
+                        total_ppp = 0
+                df = pd.DataFrame(list(stats_list.items()), columns=['Team Players', 'Power Play Points'])
+                fig = px.scatter(df, x="Team Players", y="Power Play Points", template='plotly_dark')
+                graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+            if request.GET.get('stat-select') == 'toi':
+                team = Team.objects.get(coach=request.user, name=request.GET['teamChoice'])
+                roster = PlayerList.objects.filter(team=team)
+                player_list = PlayerList.objects.filter(team=team)
+                stats_list = {}
+                total_toi = 0
+                for player in player_list:
+                    if player.isDummy:
+                        stats = Stats.objects.filter(dummy=player.dummy)
+                        for stat in stats:
+                            total_toi += stat.toi
+                        toi_as_time = str(datetime.timedelta(seconds=total_toi))
+                        stats_list.update({f'{player.dummy.firstName} {player.dummy.lastName}': toi_as_time})
+                        total_toi = 0
+
+                    else:
+                        stats = Stats.objects.filter(player=player.player)
+                        for stat in stats:
+                            total_toi += stat.toi
+                        toi_as_time = str(datetime.timedelta(seconds=total_toi))
+                        stats_list.update({f'{player.player.first_name} {player.player.last_name}': toi_as_time})
+                        total_toi = 0
+
+                df = pd.DataFrame(list(stats_list.items()), columns=['Team Players', 'TOI'])
+                fig = px.scatter(df, x="Team Players", y="TOI", template='plotly_dark')
+                graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+            if request.GET.get('stat-select') == 'fop':
+                team = Team.objects.get(coach=request.user, name=request.GET['teamChoice'])
+                roster = PlayerList.objects.filter(team=team)
+                player_list = PlayerList.objects.filter(team=team)
+                stats_list = {}
+                total_fop = 0
+                for player in player_list:
+                    if player.isDummy:
+                        stats = Stats.objects.filter(dummy=player.dummy)
+                        for stat in stats:
+                            total_fop += stat.foPercent
+                        stats_list.update({f'{player.dummy.firstName} {player.dummy.lastName}': total_fop})
+                        total_fop = 0
+
+                    else:
+                        stats = Stats.objects.filter(player=player.player)
+                        for stat in stats:
+                            total_fop += stat.foPercent
+                        stats_list.update({f'{player.player.first_name} {player.player.last_name}': total_fop})
+                        total_fop = 0
+                df = pd.DataFrame(list(stats_list.items()), columns=['Team Players', 'Face-off Percentage'])
+                fig = px.scatter(df, x="Team Players", y="Face-off Percentage", template='plotly_dark')
+                graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+            if request.GET.get('stat-select') == 'shoop':
+                team = Team.objects.get(coach=request.user, name=request.GET['teamChoice'])
+                roster = PlayerList.objects.filter(team=team)
+                player_list = PlayerList.objects.filter(team=team)
+                stats_list = {}
+                total_shoop = 0
+                for player in player_list:
+                    if player.isDummy:
+                        stats = Stats.objects.filter(dummy=player.dummy)
+                        for stat in stats:
+                            total_shoop += stat.shootingPercent
+                        stats_list.update({f'{player.dummy.firstName} {player.dummy.lastName}': total_shoop})
+                        total_shoop = 0
+
+                    else:
+                        stats = Stats.objects.filter(player=player.player)
+                        for stat in stats:
+                            total_shoop += stat.shootingPercent
+                        stats_list.update({f'{player.player.first_name} {player.player.last_name}': total_shoop})
+                        total_shoop = 0
+                df = pd.DataFrame(list(stats_list.items()), columns=['Team Players', 'Shooting Percentage'])
+                fig = px.scatter(df, x="Team Players", y="Shooting Percentage", template='plotly_dark')
+                graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+        except ObjectDoesNotExist:
+            messages.error(request, 'error')
+            pass
+    # ------------------------------------------ FIND TEAMS ------------------------------------------------------------
+    if request.method == 'GET':
+        if request.GET.get('teamDropdown'):
+            try:
+                # Get what team the user selected in the dropdown
+                team = Team.objects.get(coach=request.user, name=request.GET['teamDropdown'])
+                # Lookup every player on that team
+                roster = PlayerList.objects.filter(team=team)
+                player_list = PlayerList.objects.filter(team=team)
 
             except ObjectDoesNotExist:
                 pass
 
-            df = pd.DataFrame(list(stats_list.items()), columns=['Team Players', 'TOI'])
-            fig = px.line(df, x="Team Players", y="TOI", template='plotly_dark')
-            graph = fig.to_html(full_html=False, default_height=500, default_width=700)
-
-    # Delete team button
+    # ------------------------------------------ DELETE TEAM -----------------------------------------------------------
     if request.method == 'POST' and request.POST.get('deleteTeamSubmit') is not None:
         while True:
             if request.POST['deleteTeam'] == '---':
@@ -107,7 +313,33 @@ def coach_dashboard(request):
                 messages.error(request, 'Team deletion error')
                 break
 
-    # Only triggers when the 'create team' button is selected
+    # ------------------------------------------ DELETE PLAYER ---------------------------------------------------------
+    if request.method == 'POST' and request.POST.get('removePlayerSubmit') is not None:
+        while True:
+            if request.POST['deletePlayerPlayer'] == '---':
+                messages.error(request, 'Please select a player')
+                break
+
+            try:
+                word = request.POST['deletePlayerPlayer']
+                if 'unlinked' not in word:
+
+                    first_name = word.split(' ', 1)[0]
+                    last_name = word.split(' ', 1)[1]
+                    pp = User.objects.get(first_name=first_name, last_name=last_name)
+                    pp_list = PlayerList.objects.get(player=pp, team=request.POST['deletePlayerTeam'])
+                    pp_list.delete()
+                else:
+                    print('unlinked found')
+                    pp = Dummy.objects.get(firstName=word.split(' ')[0], lastName=word.split(' ')[1])
+                    pp.delete()
+                messages.success(request, "player has been removed")
+                break
+            except ObjectDoesNotExist:
+                messages.error(request, 'Player removal error')
+                break
+
+    # ------------------------------------------ CREATE TEAM  ----------------------------------------------------------
     if request.method == 'POST' and request.POST.get('teamSubmit') is not None:
 
         while True:
@@ -145,7 +377,7 @@ def coach_dashboard(request):
                 messages.error(request, 'data entry error')
                 break
 
-    # Only triggers when the 'create player' button is selected
+    # ------------------------------------------ CREATE PLAYER ---------------------------------------------------------
     if request.method == 'POST' and request.POST.get('playerSubmit') is not None:
         while True:
             # Error messages
@@ -205,34 +437,24 @@ def coach_dashboard(request):
                 messages.error(request, 'data entry error')
                 break
 
+    # ----------------------------------- CONTEXT / END ----------------------------------------------------------------
     try:
         team_list = Team.objects.filter(coach=request.user)
     except ObjectDoesNotExist:
         team_list = None
-
-    # ------------------------------------------------- PLOTLY ---------------------------------------------------------
-
 
     context = {
         'title': 'Dashboard',
         'team_list': team_list,
         'roster': roster,
         'team': team,
+        'stat_1': stat_1,
         'graph': graph,
+        'graph-2': graph_2,
     }
     return render(request, 'main/coach_dashboard.html', context)
 
 
-# TODO: IMPORTANT!!!!! Make sure to not allow coaches to make teams or players
-#  with the same name as one they already have
-# TODO: Add ajax to this so it isn't so awkward
-
-# For this to work:
-# 1. When a new player is created, it should be made as a dummy first, taking first name, last name,
-#    createdBy = request.user
-# 2. When the stats is created, all playerList entries on that team should be shown for the user to select. If a dummy
-#    is selected, the stats should also do: isDummy = True, Dummy = PlayerList.Dummy. If a user is selected, isDummy =
-#    False and Dummy = None
 @login_required()
 def invite_players(request):
 
@@ -364,37 +586,114 @@ def season_stats(request):
     except ObjectDoesNotExist:
         pass
     userGoals = 0
+    aveGoals = 0
+    highGoals = 0
+
     userPoints = 0
-    userFow= 0
+    avePoints = 0
+    highPoints = 0
+
+    userFow = 0
+    aveFow = 0
+    highFow = 0
+
     userFol = 0
+    aveFol = 0
+    highFol = 0
+
     userPpg = 0
+    avePpg = 0
+    highPpg = 0
+
     userShg = 0
+    aveShg = 0
+    highShg = 0
+
     userAssists = 0
+    aveAssists = 0
+    highAssists = 0
+
     userFoPercent = 0
+    aveFoPercent = 0
+    highFoPercent = 0
+
     userShootingPercent = 0
+    aveShootingPercent = 0
+    highShootingPercent = 0
+
     userToi = 0
+    aveToi = 0
+    highToi = 0
+
     userSog = 0
+    aveSog = 0
+    highSog = 0
+
     userPim = 0
+    avePim = 0
+    highPim = 0
 
-    for stat in statList:
-        userGoals += stat.goals
-        userPoints += stat.points
-        userFow += stat.fow
-        userFol += stat.fol
-        userPpg += stat.ppg
-        userShg += stat.shg
-        userAssists += stat.assists
-        userFoPercent += stat.foPercent
-        userShootingPercent += stat.shootingPercent
-        userToi += stat.toi
-        userSog += stat.sog
-        userPim += stat.pim
-
-    def seasonHigh(x):
-        max = 0
+    if len(statList) != 0:
         for stat in statList:
-            if x > max: max = x
-        return max
+            userGoals += stat.goals
+            aveGoals = (aveGoals + stat.goals) / len(statList)
+            if stat.goals > highGoals:
+                highGoals = stat.goals
+
+            userPoints += stat.points
+            avePoints = (avePoints + stat.points) / len(statList)
+            if stat.points > highPoints:
+                highPoints = stat.points
+
+            userFow += stat.fow
+            aveFow = (aveFow + stat.fow) / len(statList)
+            if stat.fow > highFow:
+                highFow = stat.fow
+
+            userFol += stat.fol
+            aveFol = (aveFol + stat.fol) / len(statList)
+            if stat.fol > highFol:
+                highFol = stat.fol
+
+            userPpg += stat.ppg
+            avePpg = (avePpg + stat.ppg) / len(statList)
+            if stat.ppg > highPpg:
+                highPpg = stat.ppg
+
+            userShg += stat.shg
+            aveShg = (aveShg + stat.shg) / len(statList)
+            if stat.shg > highShg:
+                highShg = stat.shg
+
+            userAssists += stat.assists
+            aveAssists = (aveAssists + stat.assists) / len(statList)
+            if stat.assists > highAssists:
+                highAssists = stat.assists
+
+            userFoPercent += stat.foPercent
+            aveFoPercent = (aveFoPercent + stat.foPercent) / len(statList)
+            if stat.foPercent > highFoPercent:
+                highFoPercent = stat.foPercent
+
+            userShootingPercent += stat.shootingPercent
+            aveShootingPercent = (aveShootingPercent + stat.shootingPercent) / len(statList)
+            if stat.shootingPercent > highShootingPercent:
+                highShootingPercent = stat.shootingPercent
+
+            userToi += stat.toi
+            aveToi = (aveToi + stat.toi) / len(statList)
+            if stat.toi > highToi:
+                highToi = stat.toi
+
+            userSog += stat.sog
+            aveSog = (aveSog + stat.sog) / len(statList)
+            if stat.sog > highSog:
+                highSog = stat.sog
+
+            userPim += stat.pim
+            avePim = (avePim + stat.pim) / len(statList)
+            if stat.pim > highPim:
+                highPim = stat.pim
 
     context = {
         'user_goals': userGoals,
@@ -410,38 +709,38 @@ def season_stats(request):
         'user_sog': userSog,
         'user_pim': userPim,
 
-        'ave_goals': round(userGoals / len(statList), 2),
-        'ave_points': round(userPoints / len(statList), 2),
-        'ave_fow': round(userFow / len(statList), 2),
-        'ave_fol': round(userFol / len(statList), 2),
-        'ave_ppg': round(userPpg / len(statList), 2),
-        'ave_shg': round(userShg / len(statList), 2),
-        'ave_assists': round(userAssists / len(statList), 2),
-        'ave_foPercent': round(userFoPercent / len(statList), 2),
-        'ave_shootingPercent': round(userShootingPercent / len(statList), 2),
-        'ave_toi': round(userToi / len(statList), 2),
-        'ave_sog': round(userSog / len(statList), 2),
-        'ave_pim': round(userPim / len(statList), 2),
+        'ave_goals': round(aveGoals, 2),
+        'ave_points': round(avePoints, 2),
+        'ave_fow': round(aveFow, 2),
+        'ave_fol': round(aveFol, 2),
+        'ave_ppg': round(avePpg, 2),
+        'ave_shg': round(aveShg, 2),
+        'ave_assists': round(aveAssists, 2),
+        'ave_foPercent': round(aveFoPercent, 2),
+        'ave_shootingPercent': round(aveShootingPercent, 2),
+        'ave_toi': round(aveToi, 2),
+        'ave_sog': round(aveSog, 2),
+        'ave_pim': round(avePim, 2),
 
-        'high_goals': seasonHigh(stat.goals),
-        'high_points': seasonHigh(stat.points),
-        'high_fow': seasonHigh(stat.fow),
-        'high_fol': seasonHigh(stat.fol),
-        'high_ppg': seasonHigh(stat.ppg),
-        'high_shg': seasonHigh(stat.shg),
-        'high_assists': seasonHigh(stat.assists),
-        'high_foPercent': seasonHigh(stat.foPercent),
-        'high_shootingPercent': seasonHigh(stat.shootingPercent),
-        'high_toi': seasonHigh(stat.toi),
-        'high_sog': seasonHigh(stat.sog),
-        'high_pim': seasonHigh(stat.pim),
+        'high_goals': highGoals,
+        'high_points': highPoints,
+        'high_fow': highFow,
+        'high_fol': highFol,
+        'high_ppg': highPpg,
+        'high_shg': highShg,
+        'high_assists': highAssists,
+        'high_foPercent': highFoPercent,
+        'high_shootingPercent': highShootingPercent,
+        'high_toi': highToi,
+        'high_sog': highSog,
+        'high_pim': highPim,
         'title': 'Season Stats',
 
     }
+
     return render(request, 'main/season_stats.html', context)
 
 
 @login_required()
 def team_comparison(request):
     return render(request, 'main/team_comparison.html', {'title': 'Team Comparison'})
-

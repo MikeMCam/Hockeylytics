@@ -71,7 +71,7 @@ class Stats(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     player = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     isDummy = models.BooleanField(default=True)
-    dummy = models.ForeignKey(Dummy, on_delete=models.DO_NOTHING, null=True, blank=True)
+    dummy = models.ForeignKey(Dummy, on_delete=models.CASCADE, null=True, blank=True)
 
     FORWARD = 'FWD'
     DEFENSE = 'DEF'
@@ -94,13 +94,16 @@ class Stats(models.Model):
     fow = models.IntegerField(blank=True, null=True)
     fol = models.IntegerField(blank=True, null=True)
     ppg = models.IntegerField(blank=True, null=True)
+    ppp = models.IntegerField(blank=True, null=True)
     shg = models.IntegerField(blank=True, null=True)
     assists = models.IntegerField(blank=True, null=True)
+    # Dont let player enter foPercent and shootingPercent
     foPercent = models.FloatField(blank=True, null=True)
     shootingPercent = models.FloatField(blank=True, null=True)
     toi = models.IntegerField(blank=True, null=True)
     sog = models.IntegerField(blank=True, null=True)
     pim = models.IntegerField(blank=True, null=True)
+    shots = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.match} | {self.player} | {self.dummy}'
