@@ -40,7 +40,15 @@
                         {% if user.profile.user_type == 'CH' %}
                             <a class="nav-item nav-link" href="{% url 'coach-dashboard' %}">Dashboard</a>
                             <a class="nav-item nav-link" href="{% url 'invite-players' %}">Invite Players</a>
-                            <a class="nav-item nav-link" href="{% url 'enter-game' %}">Enter Game Data</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Enter Data
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{% url 'enter-game' %}">Match</a>
+                                    <a class="dropdown-item" href="{% url 'enter-stats' %}">Stats</a>
+                                </div>
+                            </li>
                             <a class="nav-item nav-link" href="{% url 'game-list' %}">Games</a>
                         {% elif user.profile.user_type == 'PR' %}
                             <a class="nav-item nav-link" href="{% url 'player-dashboard' %}">Dashboard</a>

@@ -5,23 +5,58 @@
     <div class="content-section">
         <form method="POST">
             {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Game Info</legend>
-                <p>Click the link to see match history</p>
-                <h3>Match History:</h3>
-                <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>Choose...</option>
-                        {% for match in matches %}
-                            <option value="{{ match }}">{{ match }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                {{ form|crispy }}
-            </fieldset>
-            <div class=""form-group>
-                <button class="btn btn-outline-info" type="submit">See Game History</button>
+            <legend class="border-bottom mb-4">Game Info</legend>
+            <p>Click the link to see match history</p>
+            <h3>Match History:</h3>
+            <div class="input-group mb-3">
+                <select class="custom-select" id="matchDropdown" name="matchDropdown" onchange="form.submit()">
+                    {% if match == None %}
+                        <option selected>---</option>
+                    {% else %}
+                        <option selected>{{ match }}</option>
+                    {% endif %}
+                    {% for match in match_list %}
+                        <option value="{{ match }}">{{ match }}</option>
+                    {% endfor %}
+                </select>
             </div>
+        </form>
+        <!----------------------------------- Table for team match history ---------------------------------------->
+        <table class="table table-striped">
+            <div style="text-align: center;">
+                <br>
+                <h3><strong>Match Data</strong></h3>
+            </div>
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Position</th>
+                <th scope="col">Points</th>
+                <th scope="col">Assists</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i, x in player_stats_list %}
+                <tr>
+                    <th scope="row">Linked: {{ x }}</th>
+                    <td>{{ x.player.first_name }} {{ x.player.last_name }}</td>
+                    <td>{{ x.position }}</td>
+                    <td>{{ x.points }}</td>
+                    <td>{{ x.assists }}</td>
+                </tr>
+            {% endfor %}
+            {% for x in dummy_stats_list %}
+                <tr>
+                    <th scope="row">Unlinked: {{ x }}</th>
+                    <td>{{ x.dummy.firstName }} {{ x.dummy.lastName }}</td>
+                    <td>{{ x.position }}</td>
+                    <td>{{ x.points }}</td>
+                    <td>{{ x.assists }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
         </form>
     </div>
 {% endblock content %}

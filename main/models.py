@@ -43,6 +43,7 @@ class PlayerList(models.Model):
 class Match(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     date = models.DateTimeField()
+    name = models.CharField(max_length=100, blank=True, null=True, default='')
     createdBy = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, default=None)
     AWAY = 'AW'
     HOME = 'HO'
@@ -96,6 +97,7 @@ class Stats(models.Model):
     ppg = models.IntegerField(blank=True, null=True)
     ppp = models.IntegerField(blank=True, null=True)
     shg = models.IntegerField(blank=True, null=True)
+    shp = models.IntegerField(blank=True, null=True)
     assists = models.IntegerField(blank=True, null=True)
     # Dont let player enter foPercent and shootingPercent
     foPercent = models.FloatField(blank=True, null=True)

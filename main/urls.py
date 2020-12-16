@@ -13,6 +13,7 @@ urlpatterns = [
     path('coach-dashboard/', views.coach_dashboard, name='coach-dashboard'),
     path('invite-players/', views.invite_players, name='invite-players'),
     path('enter-game/', views.enter_game, name='enter-game'),
+    path('enter-stats/', views.enter_stats, name='enter-stats'),
     path('game-list/', views.game_list, name='game-list'),
 
     # Player paths

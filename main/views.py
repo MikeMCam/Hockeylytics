@@ -4,8 +4,9 @@ from users.models import Profile
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import TeamCreateForm
+from .forms import MatchCreateForm
 from django.core.exceptions import ObjectDoesNotExist, ValidationError, MultipleObjectsReturned
+from django.db.models import Q
 from django.http import JsonResponse
 from django.http import HttpResponse
 import plotly.graph_objects as go
@@ -52,7 +53,7 @@ def feedback(request):
 def coach_dashboard(request):
     roster = None
     team = None
-    stat_1 =None
+    stat_1 = None
     graph = None
     graph_2 = None
     stats_list = {}
@@ -71,10 +72,122 @@ def coach_dashboard(request):
                 if request.POST.get('player-breakdown-stat') == '---':
                     messages.error(request, 'Please select a stat')
                     break
-                messages.success(request, 'We are in Player Breakdown')
+
+                # Get the team
+                pb_team = Team.objects.get(name=request.POST.get('player-breakdown-team'))
+
+                # Get the matches where that team is away or home
+                match_list = Match.objects.filter(Q(awayTeam=pb_team) | Q(homeTeam=pb_team))
+                # Gets the player / dummy
+                word = request.POST['player-breakdown-roster']
+
+                player = True
+                pp = None  # xd
+                # Player
+                if 'unlinked' not in word:
+                    first_name = word.split(' ', 1)[0]
+                    last_name = word.split(' ', 1)[1]
+                    pp = User.objects.get(first_name=first_name, last_name=last_name)
+                # Dummy
+                else:
+                    player = False
+                    pp = Dummy.objects.get(firstName=word.split(' ')[0], lastName=word.split(' ')[1])
+
+                # Find the stats where the match and player = dropdown
+                pd_stats = []
+                pd_final = {}
+
+                if request.POST.get('player-breakdown-stat') == 'Goals':
+                    for match in match_list:
+                        if player == True:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, player=pp).goals})
+                        if player == False:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, dummy=pp).goals})
+                        break
+                    df = pd.DataFrame(list(pd_final.items()), columns=['Team Matches', 'Goals'])
+                    fig = px.scatter(df, x="Team Matches", y="Goals", template='plotly_dark')
+                    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+                if request.POST.get('player-breakdown-stat') == 'Assists':
+                    for match in match_list:
+                        if player == True:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, player=pp).assists})
+                        if player == False:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, dummy=pp).assists})
+                        break
+                    df = pd.DataFrame(list(pd_final.items()), columns=['Team Matches', 'Assists'])
+                    fig = px.scatter(df, x="Team Matches", y="Assists", template='plotly_dark')
+                    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+                if request.POST.get('player-breakdown-stat') == 'Points':
+                    for match in match_list:
+                        if player == True:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, player=pp).points})
+                        if player == False:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, dummy=pp).points})
+                        break
+                    df = pd.DataFrame(list(pd_final.items()), columns=['Team Matches', 'Points'])
+                    fig = px.scatter(df, x="Team Matches", y="Points", template='plotly_dark')
+                    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+                if request.POST.get('player-breakdown-stat') == 'ppg':
+                    for match in match_list:
+                        if player == True:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, player=pp).ppg})
+                        if player == False:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, dummy=pp).ppg})
+                        break
+                    df = pd.DataFrame(list(pd_final.items()), columns=['Team Matches', 'Power Play Goals'])
+                    fig = px.scatter(df, x="Team Matches", y="Power Play Goals", template='plotly_dark')
+                    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+                if request.POST.get('player-breakdown-stat') == 'ppp':
+                    for match in match_list:
+                        if player == True:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, player=pp).ppp})
+                        if player == False:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, dummy=pp).ppp})
+                        break
+                    df = pd.DataFrame(list(pd_final.items()), columns=['Team Matches', 'Power Play Points'])
+                    fig = px.scatter(df, x="Team Matches", y="Power Play Points", template='plotly_dark')
+                    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+                if request.POST.get('player-breakdown-stat') == 'toi':
+                    for match in match_list:
+                        if player == True:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, player=pp).toi})
+                        if player == False:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, dummy=pp).toi})
+                        break
+                    df = pd.DataFrame(list(pd_final.items()), columns=['Team Matches', 'Time On Ice'])
+                    fig = px.scatter(df, x="Team Matches", y="Time On Ice", template='plotly_dark')
+                    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+                if request.POST.get('player-breakdown-stat') == 'fop':
+                    for match in match_list:
+                        if player == True:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, player=pp).foPercent})
+                        if player == False:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, dummy=pp).foPercent})
+                        break
+                    df = pd.DataFrame(list(pd_final.items()), columns=['Team Matches', 'Face-off Percentage'])
+                    fig = px.scatter(df, x="Team Matches", y="Face-off Percentage", template='plotly_dark')
+                    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+                if request.POST.get('player-breakdown-stat') == 'shoop':
+                    for match in match_list:
+                        if player == True:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, player=pp).shootingPercent})
+                        if player == False:
+                            pd_final.update({f'{match}': Stats.objects.get(match=match, dummy=pp).shootingPercent})
+                        break
+                    df = pd.DataFrame(list(pd_final.items()), columns=['Team Matches', 'Shooting Percentage'])
+                    fig = px.scatter(df, x="Team Matches", y="Shooting Percentage", template='plotly_dark')
+                    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
                 break
+
             except ObjectDoesNotExist:
-                messages.error(request, 'Player Breakdown ODNE Error')
+                messages.error(request, 'Player has no stats, or team has no matches')
                 break
     # -------------------------------------------- CHOOSE A STAT -------------------------------------------------------
     if request.GET.get('stat-select') is not None:
@@ -537,35 +650,95 @@ def invite_players(request):
 @login_required()
 def enter_game(request):
     if request.method == 'POST':
-        form = TeamCreateForm(request.POST)
+        form = MatchCreateForm(request.POST)
         if form.is_valid():
+            # Checks if the yourTeam = a team the user made
+            if form.instance.yourTeam == 'HO':
+                if form.instance.homeTeam.coach != request.user:
+                    messages.error(request, "This home team doesn't belong to you, select another")
+                    return redirect(enter_game)
+            elif form.instance.yourTeam == 'AW':
+                if form.instance.awayTeam.coach != request.user:
+                    messages.error(request, "This away team doesn't belong to you, select another")
+                    return redirect(enter_game)
             form.instance.createdBy = request.user
+            form.instance.name = f'{form.instance.homeTeam.name} vs. {form.instance.awayTeam.name}'
             form.save()
             messages.success(request, f'Match has been created')
-            return redirect(coach_dashboard)
+            return redirect(enter_game)
     else:
-        form = TeamCreateForm()
+        form = MatchCreateForm()
 
     context = {
         'form': form,
-        'title': 'Game Entry',
+        'title': 'Match Entry',
     }
     return render(request, 'main/enter_game.html', context)
 
 
 @login_required()
+def enter_stats(request):
+    match_list = Match.objects.filter(createdBy=request.user)
+    selected_match = None
+    teams = Team.objects.filter(coach=request.user)
+    player_list = PlayerList.objects.filter(team__in=teams)
+    context = {
+        'title': 'Stats Entry',
+        'match_list': match_list,
+        'selected_match': selected_match,
+        'player_list': player_list,
+    }
+    return render(request, 'main/enter_stats.html', context)
+
+
+@login_required()
 def game_list(request):
     match = None
-    if request.method == 'GET':
-        if request.GET.get('teamListDropDown'):
-            try:
-                match = Team.objects.filter(coach=request.user)
-            except ObjectDoesNotExist:
-                pass
+    userName = 0
+    userPosition = 0
+    userPoints = 0
+    userAssists = 0
+    dd_player_stats = None
+    dd_dummy_stats = None
+
+    match_list = Match.objects.filter(createdBy=request.user)
+    if request.method == 'POST':
+        try:
+            dd_match = Match.objects.get(name=request.POST.get('matchDropdown'))
+            dd_team = None
+            if dd_match.yourTeam == 'AW':
+                dd_team = dd_match.awayTeam
+            if dd_match.yourTeam == 'HO':
+                dd_team = dd_match.homeTeam
+            dd_player_list = PlayerList.objects.filter(team=dd_team, isDummy=False)
+            dd_dummy_list = PlayerList.objects.filter(team=dd_team, isDummy=True)
+            dd_player_stats = []
+            dd_dummy_stats = []
+            for player in dd_player_list:
+                if Stats.objects.filter(match=dd_match, player=player.player, isDummy=False).exists():
+                    dd_player_stats.append(Stats.objects.get(match=dd_match, player=player.player, isDummy=False))
+                else:
+                    pass
+            for dummy in dd_dummy_list:
+                if Stats.objects.filter(match=dd_match, dummy=dummy.dummy, isDummy=True).exists():
+                    dd_dummy_stats.append(Stats.objects.get(match=dd_match, dummy=dummy.dummy, isDummy=True))
+                else:
+                    pass
+
+        except MultipleObjectsReturned:
+            #messages.error(request, 'Object not found error')
+            pass
 
     context = {
+        'player_name': userName,
+        'player_position': userPosition,
+        'player_points': userPoints,
+        'player_assists': userAssists,
         'match': match,
-        'title': 'Games'}
+        'match_list': match_list,
+        'title': 'Games',
+        'player_stats_list': dd_player_stats,
+        'dummy_stats_list': dd_dummy_stats}
 
     return render(request, 'main/game_list.html', context)
 
