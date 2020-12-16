@@ -15,6 +15,7 @@ urlpatterns = [
     path('enter-game/', views.enter_game, name='enter-game'),
     path('enter-stats/', views.enter_stats, name='enter-stats'),
     path('game-list/', views.game_list, name='game-list'),
+    path('coach-dashboard_2/', views.coach_dashboard_2, name='coach-dashboard_2'),
 
     # Player paths
     path('player-dashboard/', views.player_dashboard, name='player-dashboard'),

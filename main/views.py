@@ -47,8 +47,13 @@ def feedback(request):
 
 
 # --------------------------------------- COACH VIEWS ------------------------------------------------------------------
-# TODO: Make it so coaches cannot enter in players with the same first + last name combination as 1 they already have
-# TODO: When a coach deletes a team, delete the dummies on that team
+def coach_dashboard_2(request):
+    context = {
+        'title': 'Team Dashboard',
+    }
+    return render(request, 'main/coach_dashboard_2.html', context)
+
+
 @login_required()
 def coach_dashboard(request):
     roster = None
@@ -682,6 +687,73 @@ def enter_stats(request):
     selected_match = None
     teams = Team.objects.filter(coach=request.user)
     player_list = PlayerList.objects.filter(team__in=teams)
+    if request.method == 'POST':
+        print(request.POST)
+        while True:
+            if request.POST.get('match-dropdown') == '---':
+                messages.error(request, 'Please select a match')
+                break
+            if request.POST.get('player-dropdown') == '---':
+                messages.error(request, 'Please select a player')
+                break
+            if request.POST.get('position-dropdown') == '---':
+                messages.error(request, 'Please select a position')
+                break
+
+            word = request.POST.get('player-dropdown')
+            player = None
+
+            stat = Stats.objects.create(match=Match.objects.get(name=request.POST.get('match-dropdown')))
+            # Dummy
+            if 'unlinked' in word:
+                player = Dummy.objects.get(firstName=word.split(' ')[0], lastName=word.split(' ')[1])
+                stat.player = None
+                stat.isDummy = True
+                stat.dummy = player
+            else:
+                player = User.objects.get(first_name=word.split(' ', 1)[0], last_name=word.split(' ', 1)[1])
+                stat.player = player
+                stat.isDummy = False
+                stat.dummy = None
+            position = ''
+            if request.POST.get('position') == 'Forward':
+                position = 'FWD'
+            elif request.POST.get('position') == 'Defence':
+                position = 'DEF'
+            elif request.POST.get('position') == 'Center':
+                position = 'CNT'
+            elif request.POST.get('position') == 'Goalie':
+                position = 'GOL'
+            stat.position = position
+            stat.goals = request.POST.get('goals')
+            stat.points = request.POST.get('points')
+            stat.assists = request.POST.get('assists')
+            stat.toi = request.POST.get('toi')
+            stat.ppg = request.POST.get('pp-goals')
+            stat.ppp = request.POST.get('pp-points')
+            stat.sog = request.POST.get('shots-on-goals')
+            stat.shots = request.POST.get('total-shots')
+            stat.fow = request.POST.get('fow')
+            stat.fol = request.POST.get('fol')
+            stat.shg = request.POST.get('sh-goals')
+            stat.shp = request.POST.get('sh-points')
+            try:
+                stat.foPercent = (float(request.POST.get('fow')) / (
+                        float(request.POST.get('fow')) + float(request.POST.get('fol')))) * 100
+            except ZeroDivisionError:
+                stat.foPercent = 0.0
+
+            try:
+                stat.shootingPercent = (float(request.POST.get('goals')) / float(
+                    request.POST.get('total-shots'))) * 100
+            except ZeroDivisionError:
+                stat.shootingPercent = 0.0
+
+            stat.save()
+            messages.success(request, 'Stat has been created')
+            break
+
+
     context = {
         'title': 'Stats Entry',
         'match_list': match_list,

@@ -26,14 +26,14 @@
                     {% endif %}
                     {% for player in player_list %}
                         {% if player.isDummy == True %}
-                            <option value="{{ player.dummy.firstName }} {{ player.dummy.lastName }}">{{ player.dummy.firstName }} {{ player.dummy.lastName }}</option>
+                            <option value="{{ player.dummy.firstName }} {{ player.dummy.lastName }} (unlinked)">{{ player.dummy.firstName }} {{ player.dummy.lastName }} (unlinked)</option>
                         {% else %}
                             <option value="">{{ player.player.first_name }} {{ player.player.last_name }}</option>
                         {% endif %}
                     {% endfor %}
                 </select>
                 <h5>Position:</h5>
-                <select class="custom-select" id="player-dropdown" name="player-dropdown" style="margin-bottom: 10px">
+                <select class="custom-select" id="position-dropdown" name="position-dropdown" style="margin-bottom: 10px">
                     <option selected>---</option>
                     <option value="Forward">Forward</option>
                     <option value="Defence">Defence</option>
@@ -48,22 +48,41 @@
 
                         <div style="margin-right: 5px">
                             <h5>Goals:</h5>
-                            <input max="3" type="number" style="margin-bottom: 10px" class="form-control" id="goals" name="goals" autocomplete="off" placeholder="0">
+                            <input max="50" type="number" style="margin-bottom: 10px" class="form-control" id="goals" name="goals" autocomplete="off" value="0">
                         </div>
                         <div>
                             <h5>Points:</h5>
-                            <input max="3" type="number" style="margin-bottom: 10px" class="form-control" id="points" name="points" autocomplete="off" placeholder="0">
+                            <input max="50" type="number" style="margin-bottom: 10px" class="form-control" id="points" name="points" autocomplete="off" value="0">
+                        </div>
+                        <div>
+                            <h5>Assists:</h5>
+                            <input max="50" type="number" style="margin-bottom: 10px" class="form-control" id="assists" name="assists" autocomplete="off" value="0">
+                        </div>
+                        <div>
+                            <h5>Time on Ice:</h5>
+                            <input max="900" type="number" style="margin-bottom: 10px" class="form-control" id="toi" name="toi" autocomplete="off" value="0">
                         </div>
                     </div>
                     <h4><b>Power Play:</b></h4>
                     <div class="row">
                         <div style="margin-right: 5px">
                             <h5>Goals:</h5>
-                            <input max="3" type="number" style="margin-bottom: 10px" class="form-control" id="pp-goals" name="pp-goals" autocomplete="off" placeholder="0">
+                            <input max="50" type="number" style="margin-bottom: 10px" class="form-control" id="pp-goals" name="pp-goals" autocomplete="off" value="0">
                         </div>
                         <div>
                             <h5>Points:</h5>
-                            <input max="3" type="number" style="margin-bottom: 10px" class="form-control" id="pp-points" name="pp-points" autocomplete="off" placeholder="0">
+                            <input max="50" type="number" style="margin-bottom: 10px" class="form-control" id="pp-points" name="pp-points" autocomplete="off" value="0">
+                        </div>
+                    </div>
+                    <h4><b>Shots:</b></h4>
+                    <div class="row">
+                        <div style="margin-right: 5px">
+                            <h5>Shots on Goal:</h5>
+                            <input max="50" type="number" style="margin-bottom: 10px" class="form-control" id="shots-on-goals" name="shots-on-goals" autocomplete="off" value="0">
+                        </div>
+                        <div>
+                            <h5>Total Shots:</h5>
+                            <input max="50" type="number" style="margin-bottom: 10px" class="form-control" id="total-shots" name="total-shots" autocomplete="off" value="0">
                         </div>
                     </div>
 
@@ -74,24 +93,25 @@
 
                         <div style="margin-right: 5px">
                             <h5>Wins:</h5>
-                            <input max="3" type="number" style="margin-bottom: 10px" class="form-control" id="fow" name="fow" autocomplete="off" placeholder="0">
+                            <input max="50" type="number" style="margin-bottom: 10px" class="form-control" id="fow" name="fow" autocomplete="off" value="0">
                         </div>
                         <div>
                             <h5>Losses:</h5>
-                            <input max="3" type="number" style="margin-bottom: 10px" class="form-control" id="fol" name="fol" autocomplete="off" placeholder="0">
+                            <input max="50" type="number" style="margin-bottom: 10px" class="form-control" id="fol" name="fol" autocomplete="off" value="0">
                         </div>
                     </div>
                     <h4><b>Shorthand:</b></h4>
                     <div class="row">
                         <div style="margin-right: 5px">
                             <h5>Goals:</h5>
-                            <input max="3" type="number" style="margin-bottom: 10px" class="form-control" id="sh-goals" name="sh-goals" autocomplete="off" placeholder="0">
+                            <input max="50" type="number" style="margin-bottom: 10px" class="form-control" id="sh-goals" name="sh-goals" autocomplete="off" value="0">
                         </div>
                         <div>
                             <h5>Points:</h5>
-                            <input max="3" type="number" style="margin-bottom: 10px" class="form-control" id="sh-points" name="sh-points" autocomplete="off" placeholder="0">
+                            <input max="50" type="number" style="margin-bottom: 10px" class="form-control" id="sh-points" name="sh-points" autocomplete="off" value="0">
                         </div>
                     </div>
+                    <button class="btn btn-primary">Submit</button>
 
                 </div>
             </div>
