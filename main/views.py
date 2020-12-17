@@ -63,7 +63,6 @@ def coach_dashboard_2(request):
                 team = Team.objects.get(coach=request.user, name=request.POST['deleteTeam'])
 
                 dummy_list = PlayerList.objects.filter(team=team, isDummy=True)
-                print(dummy_list)
                 for dummy in dummy_list:
                     dum = dummy.dummy
                     dum.delete()
@@ -92,7 +91,6 @@ def coach_dashboard_2(request):
                     pp_list = PlayerList.objects.get(player=pp, team=request.POST['deletePlayerTeam'])
                     pp_list.delete()
                 else:
-                    print('unlinked found')
                     pp = Dummy.objects.get(firstName=word.split(' ')[0], lastName=word.split(' ')[1])
                     pp.delete()
                 messages.success(request, "player has been removed")
@@ -157,21 +155,17 @@ def coach_dashboard_2(request):
 
             # scuffed way of checking for duplicate names
             full_name = request.POST['playerFirstName'] + " " + request.POST['playerLastName']
-            print(f'full_name = {full_name}')
             should_break = False
-            print(request.POST)
             playerList = PlayerList.objects.filter(team=Team.objects.get(coach=request.user,
                                                                          name=request.POST['playerTeam']))
             for player in playerList:
                 if player.isDummy:
                     dummy_name = player.dummy.firstName + " " + player.dummy.lastName
                     if dummy_name == full_name:
-                        print(f'dummy_name = {dummy_name}')
                         should_break = True
                 else:
                     player_name = player.player.first_name + " " + player.player.last_name
                     if player_name == full_name:
-                        print(f'player_name = {player_name}')
                         should_break = True
             if should_break:
                 messages.error(request, 'please enter a unique player name')
@@ -208,7 +202,6 @@ def coach_dashboard_2(request):
 
     # ---------------------------------------- GRAPH SUBMISSION --------------------------------------------------------
     if request.POST.get('player-breakdown-submit') is not None:
-        print(request.POST)
         while True:
             try:
                 if request.POST.get('player-breakdown-team') == 'None':
@@ -889,7 +882,6 @@ def enter_stats(request):
         player_list = PlayerList.objects.filter(team=selected_team)
 
     if request.method == 'POST':
-        print(request.POST)
         while True:
             if request.POST.get('match-dropdown') == '---':
                 messages.error(request, 'Please select a match')
@@ -916,13 +908,13 @@ def enter_stats(request):
                 stat.isDummy = False
                 stat.dummy = None
             position = ''
-            if request.POST.get('position') == 'Forward':
+            if request.POST.get('position-dropdown') == 'Forward':
                 position = 'FWD'
-            elif request.POST.get('position') == 'Defence':
+            elif request.POST.get('position-dropdown') == 'Defence':
                 position = 'DEF'
-            elif request.POST.get('position') == 'Center':
+            elif request.POST.get('position-dropdown') == 'Center':
                 position = 'CNT'
-            elif request.POST.get('position') == 'Goalie':
+            elif request.POST.get('position-dropdown') == 'Goalie':
                 position = 'GOL'
             stat.position = position
             stat.goals = request.POST.get('goals')
@@ -1148,6 +1140,7 @@ def season_stats(request):
 
     try:
         statList = Stats.objects.filter(player=user)
+
         for stat in statList:
             dates.append(stat.match.date.year)
 
@@ -1157,7 +1150,6 @@ def season_stats(request):
         list(set(fixed_dates))
 
         if request.method == 'POST':
-            print(request.POST)
             if request.POST.get('date') == '---':
                 messages.error(request, 'Please select a year')
                 return redirect('season-stats')
@@ -1353,7 +1345,6 @@ def team_comparison(request):
 
     try:
         if request.method == 'POST':
-            print(request.POST)
             # Error checking
             if request.POST.get('team-one') == '---' or request.POST.get('team-two') == '---':
                 messages.error(request, 'Please select two teams')
