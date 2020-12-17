@@ -602,6 +602,7 @@ def coach_dashboard(request):
                     dum = dummy.dummy
                     dum.delete()
                 team.delete()
+                team = None
                 messages.success(request, 'Team has been deleted')
                 break
             except ObjectDoesNotExist:
@@ -902,7 +903,7 @@ def enter_stats(request):
 
             word = request.POST.get('player-dropdown')
 
-            stat = Stats.objects.create(match=Match.objects.get(name=request.POST.get('match-dropdown')))
+            stat = Stats.objects.create(match=Match.objects.get(name=request.POST.get('match-dropdown'), createdBy=request.user))
             # Dummy
             if 'unlinked' in word:
                 player = Dummy.objects.get(firstName=word.split(' ')[0], lastName=word.split(' ')[1])

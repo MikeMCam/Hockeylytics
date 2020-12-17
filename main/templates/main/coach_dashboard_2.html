@@ -40,7 +40,7 @@
                                 {% if player.isDummy == True %}
                                     <option value="{{ player.dummy }}">{{ player.dummy }}</option>
                                 {% else %}
-                                    <option value="{{ player.player }}">{{ player.player.first_name }} {{ player.player.last_name }}</option>
+                                    <option value="{{ player.player.first_name }} {{ player.player.last_name }}">{{ player.player.first_name }} {{ player.player.last_name }}</option>
                                 {% endif %}
                             {% endfor %}
                         </select>
