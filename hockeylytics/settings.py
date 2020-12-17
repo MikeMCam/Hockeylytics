@@ -154,7 +154,7 @@ django_heroku.settings(locals())
 SECURE_SSL_REDIRECT = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Allows password reset via email to work
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -171,3 +171,4 @@ CSRF_COOKIE_SECURE = True
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+DEBUG_PROPAGATE_EXCEPTIONS = True
