@@ -1155,8 +1155,15 @@ def season_stats(request):
         list(set(fixed_dates))
 
         if request.method == 'POST':
-
+            print(request.POST)
+            if request.POST.get('date') == '---':
+                messages.error(request, 'Please select a year')
+                return redirect('season-stats')
+            elif request.POST.get('position') == '---':
+                messages.error(request, 'Please select a position')
+                return redirect('season-stats')
             position = request.POST.get('position')
+            year = request.POST.get('date')
             if position == 'Forward':
                 position = 'FWD'
             elif position == 'Defence':
@@ -1165,7 +1172,7 @@ def season_stats(request):
                 position = 'CNT'
             elif position == 'Goalie':
                 position = 'GOL'
-            statList = Stats.objects.filter(player=user, position=position)
+            statList = Stats.objects.filter(player=user, position=position, match__date__year=year)
     except ObjectDoesNotExist:
         pass
     userGoals = 0
