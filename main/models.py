@@ -21,6 +21,8 @@ class Team(models.Model):
     country = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
+    wins = models.IntegerField(default=0, blank=True)
+    losses = models.IntegerField(default=0, blank=True)
 
     def __str__(self):
         return self.name

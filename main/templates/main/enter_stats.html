@@ -34,16 +34,12 @@
                 </select>
                 <h5>Player:</h5>
                 <select class="custom-select" id="player-dropdown" name="player-dropdown" style="margin-bottom: 10px">
-                    {% if selected_match == None %}
-                        <option selected>---</option>
-                    {% else %}
-                        <option selected>{{ selected_player }}</option>
-                    {% endif %}
+                    <option selected>---</option>
                     {% for player in player_list %}
                         {% if player.isDummy == True %}
                             <option value="{{ player.dummy.firstName }} {{ player.dummy.lastName }} (unlinked)">{{ player.dummy.firstName }} {{ player.dummy.lastName }} (unlinked)</option>
                         {% else %}
-                            <option value="">{{ player.player.first_name }} {{ player.player.last_name }}</option>
+                            <option value="{{ player.player.first_name }} {{ player.player.last_name }}">{{ player.player.first_name }} {{ player.player.last_name }}</option>
                         {% endif %}
                     {% endfor %}
                 </select>

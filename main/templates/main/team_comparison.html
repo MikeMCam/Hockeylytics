@@ -1,4 +1,101 @@
 {% extends "main/base.html" %}
 {% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Pick Team 1:</h3>
 
+                <div class="input-group mb-3">
+                    <select class="custom-select" id="teamOnedropdown" name="teamOnedropdown" onchange="form.submit()">
+                        {% if match == None %}
+                            <option selected>---</option>
+                        {% else %}
+                            <option selected>{{ team }}</option>
+                        {% endif %}
+                        {% for team in team_list %}
+                            <option value="{{ team.name }}">{{ team.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <h3>Pick team 2:</h3>
+
+                <div class="input-group mb-3">
+                    <select class="custom-select" id="teamTwodropdown" name="teamTwodropdown" onchange="form.submit()">
+                        {% if match == None %}
+                            <option selected>---</option>
+                        {% else %}
+                            <option selected>{{ team }}</option>
+                        {% endif %}
+                        {% for team in team_list %}
+                            <option value="{{ team.name }}">{{ team.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class ="statsTable" style = "display: grid; float: left; margin-right: 10%; width: 45%">
+                    <h3>Team 1 Stats:</h3>
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <th scope="col"><strong>STATS</strong></th>
+                            <th scope="col"><strong>TOTAL</strong></th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Goals</th>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Points</th>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ASSISTS</th>
+                            <td>{{ user_assists }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">WINS</th>
+                            <td>{{ user_assists }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">LOSES</th>
+                            <td>{{ user_assists }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!----------------- table 2 ------------------------------->
+                <div class ="statsTable" style = "display: grid">
+                    <h3>Team 2 Stats:</h3>
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <th scope="col"><strong>STATS</strong></th>
+                            <th scope="col"><strong>TOTAL</strong></th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Goals</th>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Points</th>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ASSISTS</th>
+                            <td>{{ user_assists }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">WINS</th>
+                            <td>{{ user_assists }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">LOSES</th>
+                            <td>{{ user_assists }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}

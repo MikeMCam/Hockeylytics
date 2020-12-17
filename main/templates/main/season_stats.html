@@ -7,24 +7,27 @@
 
                 <div class="input-group mb-3">
                     <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>Choose...</option>
+                        <option selected>---</option>
                         <option value="1">2019 - 2020</option>
                         <option value="2">2018 - 2019</option>
                         <option value="3">2017 - 2018</option>
                     </select>
                 </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <h3>Your Position:</h3>
 
-                <h3>Your Position:</h3>
+                    <div class="input-group mb-3">
+                        <select class="custom-select" name="position" id="position" onchange="form.submit()">
+                            <option selected>---</option>
+                            <option value="Forward">Forward</option>
+                            <option value="Defence">Defence</option>
+                            <option value="Center">Center</option>
+                            <option value="Goalie">Goalie</option>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>Choose...</option>
-                        <option value="1">Forward</option>
-                        <option value="2">Defense</option>
-                        <option value="3">Center</option>
-                        <option value="4">Goalie</option>
-                    </select>
-                </div>
+                </form>
 
                 <h3>Your Stats:</h3>
 
@@ -51,61 +54,61 @@
                         <td>{{ high_points }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">FOW</th>
+                        <th scope="row">Face-off Wins</th>
                         <td>{{ user_fow }}</td>
                         <td>{{ ave_fow }}</td>
                         <td>{{ high_fow }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">FOL</th>
+                        <th scope="row">Face-off Losses</th>
                         <td>{{ user_fol }}</td>
                         <td>{{ ave_fol }}</td>
                         <td>{{ high_fol }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">PPG</th>
+                        <th scope="row">Power Play Goals</th>
                         <td>{{ user_ppg }}</td>
                         <td>{{ ave_ppg }}</td>
                         <td>{{ high_ppg }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">SHG</th>
+                        <th scope="row">Shorthand Goals</th>
                         <td>{{ user_shg }}</td>
                         <td>{{ ave_shg }}</td>
                         <td>{{ high_shg }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">ASSISTS</th>
+                        <th scope="row">Assists</th>
                         <td>{{ user_assists }}</td>
                         <td>{{ ave_assists }}</td>
                         <td>{{ high_assists }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">FoPERCENT</th>
+                        <th scope="row">Faceoff Percent</th>
                         <td>{{ user_foPercent }}</td>
                         <td>{{ ave_foPercent }}</td>
                         <td>{{ high_foPercent }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">SHOOTINGPERCENT</th>
+                        <th scope="row">Shooting Percent</th>
                         <td>{{ user_shootingPercent }}</td>
                         <td>{{ ave_shootingPercent }}</td>
                         <td>{{ high_shootingPercent }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">TOI</th>
+                        <th scope="row">Time on Ice</th>
                         <td>{{ user_toi }}</td>
                         <td>{{ ave_toi }}</td>
                         <td>{{ high_toi }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">SOG</th>
+                        <th scope="row">Shots on Goal</th>
                         <td>{{ user_sog }}</td>
                         <td>{{ ave_sog }}</td>
                         <td>{{ high_sog }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">PIM</th>
+                        <th scope="row">Penalty Minutes</th>
                         <td>{{ user_pim }}</td>
                         <td>{{ ave_pim }}</td>
                         <td>{{ high_pim }}</td>

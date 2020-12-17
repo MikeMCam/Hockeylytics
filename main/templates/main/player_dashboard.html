@@ -1,33 +1,50 @@
 {% extends "main/base.html" %}
 {% block content %}
+    <!-------------------------------------------------- CONTAINER 2 ------------------------------------------------------>
     <div class="container">
+        <h1>Player Breakdown</h1>
         <div class="row">
             <div class="col-md-4">
-                <h3>Choose a team: <button type="button" class="btn btn-dark" align="right" style="border-radius: 0 !important;">Add a Team</button></h3>
-
-                <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>Choose...</option>
-                        <option value="1">Carolina Raptors - Men's Hockey 2020</option>
-                        <option value="2">Carolina Raptors - Men's Hockey 2019</option>
-                        <option value="3">New York Knights - Men's Hockey 2018</option>
-                    </select>
-                </div>
-
-                <h3>Choose a Stat:</h3>
-
-                <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>Choose...</option>
-                        <option value="1">Goals</option>
-                        <option value="2">Points</option>
-                        <option value="3">Time on Ice</option>
-                    </select>
-                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <h3>Choose a team:</h3>
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="player-breakdown-team" name="player-breakdown-team">
+                            {% if team == None %}
+                                <option selected>---</option>
+                            {% else %}
+                                <option selected>{{ team }}</option>
+                            {% endif %}
+                            {% for team in team_list %}
+                                <option value="{{ team.name }}">{{ team.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <h3>Choose a stat:</h3>
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="player-breakdown-stat" name="player-breakdown-stat">
+                            <option selected>---</option>
+                            <option value="Goals">Goals</option>
+                            <option value="Assists">Assists</option>
+                            <option value="Points">Points</option>
+                            <option value="ppg">Power Play Goals</option>
+                            <option value="ppp">Power Play Points</option>
+                            <option value="toi">Time on Ice</option>
+                            <option value="fop">Face-off Percentage</option>
+                            <option value="shoop">Shooting Percentage</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" id="player-breakdown-submit" name="player-breakdown-submit">Submit</button>
+                </form>
             </div>
             <div class="col-md-8">
-                <img src="/media/main/graph-example.png"   class="rounded mx-auto d-block img-thumbnail img-fluid" style="height: 500px; width: 500px" alt="Responsive image"><br>
+                {% if graph %}
+                    {{ graph | safe }}
+                {% else %}
+                    <p>no graph provided</p>
+                {% endif %}
             </div>
         </div>
     </div>
+    <hr>
 {% endblock content %}
