@@ -9,7 +9,7 @@
                 {{ form|crispy }}
             </fieldset>
             <div class=""form-group>
-                <button class="btn btn-outline-info" type="submit">Create Match</button>
+                <button class="btn btn-outline-info" type="submit" onclick="this.disabled=true,this.form.submit();">Create Match</button>
             </div>
         </form>
     </div>

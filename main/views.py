@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from .models import Team, Match, PlayerList, Dummy, Stats
 from users.models import Profile
 from django.contrib.auth.models import User
@@ -7,11 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import MatchCreateForm
 from django.core.exceptions import ObjectDoesNotExist, ValidationError, MultipleObjectsReturned
 from django.db.models import Q
-from django.http import JsonResponse
-from django.http import HttpResponse
-import plotly.graph_objects as go
 import plotly.express as px
-import plotly.io as pio
 import pandas as pd
 import datetime
 
@@ -34,16 +30,6 @@ def my_stats(request):
 
 def clients(request):
     return render(request, 'main/clients.html', {'title': 'Clients'})
-
-
-"""""""""
-def feedback(request):
-    context = {
-        'posts': Post.objects.all(),
-        'title': 'Feedback',
-    }
-    return render(request, 'main/feedback.html', context)
-"""""""""
 
 
 # --------------------------------------- COACH VIEWS ------------------------------------------------------------------
@@ -874,9 +860,14 @@ def enter_game(request):
 @login_required()
 def enter_stats(request):
     match_list = Match.objects.filter(createdBy=request.user)
-    selected_match = None
     teams = Team.objects.filter(coach=request.user)
-    player_list = PlayerList.objects.filter(team__in=teams)
+    player_list = None
+    selected_team = None
+
+    if request.method == 'GET' and request.GET.get('real-team-dropdown') is not None:
+        selected_team = Team.objects.get(coach=request.user, name=request.GET.get('real-team-dropdown'))
+        player_list = PlayerList.objects.filter(team=selected_team)
+
     if request.method == 'POST':
         print(request.POST)
         while True:
@@ -948,8 +939,9 @@ def enter_stats(request):
     context = {
         'title': 'Stats Entry',
         'match_list': match_list,
-        'selected_match': selected_match,
         'player_list': player_list,
+        'team_list': teams,
+        'selected_team': selected_team,
     }
     return render(request, 'main/enter_stats.html', context)
 
@@ -988,8 +980,8 @@ def game_list(request):
                 else:
                     pass
 
-        except MultipleObjectsReturned:
-            #messages.error(request, 'Object not found error')
+        except ObjectDoesNotExist:
+            messages.error(request, 'Object not found error')
             pass
 
     context = {
@@ -1009,11 +1001,10 @@ def game_list(request):
 # --------------------------------------- Player VIEWS -----------------------------------------------------------------
 @login_required()
 def player_dashboard(request):
+    team = PlayerList.objects.filter(player=request.user).team
     return render(request, 'main/player_dashboard.html', {'title': 'Dashboard'})
 
 
-# TODO: Fix high, except divide by zero error
-# Stats -> user
 @login_required()
 def season_stats(request):
     user = request.user

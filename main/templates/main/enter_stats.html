@@ -1,11 +1,26 @@
 {% extends "main/base.html" %}
 {% block content %}
     <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
+        <form method="GET">
             <div class="col-md-12">
                 <h4>Enter Stats</h4>
                 <hr>
+                <h5>Team:</h5>
+                <select class="custom-select" id="real-team-dropdown" name="real-team-dropdown" onchange="form.submit()" style="margin-bottom: 10px">
+                    {% if selected_team == None %}
+                        <option selected>---</option>
+                    {% else %}
+                        <option selected>{{ selected_team }}</option>
+                    {% endif %}
+                    {% for team in team_list %}
+                        <option value="{{ team.name }}">{{ team.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="col-md-12">
                 <h5>Match:</h5>
                 <select class="custom-select" id="match-dropdown" name="match-dropdown" style="margin-bottom: 10px">
                     {% if selected_match == None %}
@@ -118,7 +133,7 @@
                         </div>
                         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
                         <div class="align-self-end">
-                            <button class="btn btn-primary">Submit</button>
+                            <button class="btn btn-primary" onclick="this.disabled=true,this.form.submit();">Submit</button>
                         </div>
                     </div>
 
