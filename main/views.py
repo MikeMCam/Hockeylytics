@@ -31,6 +31,8 @@ def my_stats(request):
 def clients(request):
     return render(request, 'main/clients.html', {'title': 'Clients'})
 
+def faq(request):
+    return render(request, 'main/faq.html', {'title': 'FAQ'})
 
 # --------------------------------------- COACH VIEWS ------------------------------------------------------------------
 def coach_dashboard_2(request):
@@ -51,7 +53,7 @@ def coach_dashboard_2(request):
                 pass
 
     # ------------------------------------------ DELETE TEAM -----------------------------------------------------------
-    if request.method == 'POST' and request.POST.get('deleteTeamSubmit') is not None:
+    if request.method == 'POST' and request.POST.get('deleteTeam') is not None:
         while True:
             if request.POST['deleteTeam'] == '---':
                 messages.error(request, 'Please select a team to delete')
@@ -74,7 +76,7 @@ def coach_dashboard_2(request):
                 break
 
     # ------------------------------------------ DELETE PLAYER ---------------------------------------------------------
-    if request.method == 'POST' and request.POST.get('removePlayerSubmit') is not None:
+    if request.method == 'POST' and request.POST.get('deletePlayerPlayer') is not None:
         while True:
             if request.POST['deletePlayerPlayer'] == '---':
                 messages.error(request, 'Please select a player')
@@ -100,7 +102,7 @@ def coach_dashboard_2(request):
                 break
 
     # ------------------------------------------ CREATE TEAM  ----------------------------------------------------------
-    if request.method == 'POST' and request.POST.get('teamSubmit') is not None:
+    if request.method == 'POST' and request.POST.get('nameField') is not None:
 
         while True:
             # Error messages
@@ -138,7 +140,7 @@ def coach_dashboard_2(request):
                 break
 
     # ------------------------------------------ CREATE PLAYER ---------------------------------------------------------
-    if request.method == 'POST' and request.POST.get('playerSubmit') is not None:
+    if request.method == 'POST' and request.POST.get('playerFirstName') is not None:
         while True:
             # Error messages
             if request.POST['playerTeam'] == '---':
@@ -369,7 +371,6 @@ def coach_dashboard(request):
     stat_1 = None
     graph = None
     stats_list = {}
-
     # -------------------------------------------- CHOOSE A STAT -------------------------------------------------------
     if request.GET.get('stat-select') is not None:
         stat_1 = request.GET.get('stat-select')
@@ -586,7 +587,7 @@ def coach_dashboard(request):
                 pass
 
     # ------------------------------------------ DELETE TEAM -----------------------------------------------------------
-    if request.method == 'POST' and request.POST.get('deleteTeamSubmit') is not None:
+    if request.method == 'POST' and request.POST.get('deleteTeam') is not None:
         while True:
             if request.POST['deleteTeam'] == '---':
                 messages.error(request, 'Please select a team to delete')
@@ -608,7 +609,7 @@ def coach_dashboard(request):
                 break
 
     # ------------------------------------------ DELETE PLAYER ---------------------------------------------------------
-    if request.method == 'POST' and request.POST.get('removePlayerSubmit') is not None:
+    if request.method == 'POST' and request.POST.get('deletePlayerPlayer') is not None:
         while True:
             if request.POST['deletePlayerPlayer'] == '---':
                 messages.error(request, 'Please select a player')
@@ -634,7 +635,7 @@ def coach_dashboard(request):
                 break
 
     # ------------------------------------------ CREATE TEAM  ----------------------------------------------------------
-    if request.method == 'POST' and request.POST.get('teamSubmit') is not None:
+    if request.method == 'POST' and request.POST.get('nameField') is not None:
 
         while True:
             # Error messages
@@ -672,7 +673,7 @@ def coach_dashboard(request):
                 break
 
     # ------------------------------------------ CREATE PLAYER ---------------------------------------------------------
-    if request.method == 'POST' and request.POST.get('playerSubmit') is not None:
+    if request.method == 'POST' and request.POST.get('playerFirstName') is not None:
         while True:
             # Error messages
             if request.POST['playerTeam'] == '---':
@@ -1335,14 +1336,65 @@ def season_stats(request):
 @login_required()
 def team_comparison(request):
     team_list = []
-
+    team_one = None
+    team_two = None
+    # :(
+    goals_1 = 0
+    points_1 = 0
+    assists_1 = 0
+    goals_2 = 0
+    points_2 = 0
+    assists_2 = 0
+    # Finds the teams the player is a member of
     roster_list = PlayerList.objects.filter(player=request.user)
-
     for player in roster_list:
         team_list.append(player.team)
+
+    try:
+        if request.method == 'POST':
+            print(request.POST)
+            # Error checking
+            if request.POST.get('team-one') == '---' or request.POST.get('team-two') == '---':
+                messages.error(request, 'Please select two teams')
+                return redirect('team-comparison')
+
+            # Gets the first and second team
+            for team in team_list:
+                if team.name == request.POST.get('team-one'):
+                    team_one = team
+                elif team.name == request.POST.get('team-two'):
+                    team_two = team
+            # Gets the stats for team one and two
+            match_list_1 = Match.objects.filter(Q(awayTeam=team_one) | Q(homeTeam=team_one))
+            match_list_2 = Match.objects.filter(Q(awayTeam=team_two) | Q(homeTeam=team_two))
+            stats_list_1 = Stats.objects.filter(match__in=match_list_1)
+            stats_list_2 = Stats.objects.filter(match__in=match_list_2)
+
+
+            for stat in stats_list_1:
+                goals_1 += stat.goals
+                points_1 += stat.points
+                assists_1 += stat.assists
+
+            for stat in stats_list_2:
+                goals_2 += stat.goals
+                points_2 += stat.points
+                assists_2 += stat.assists
+
+    except ObjectDoesNotExist:
+        messages.error(request, 'ObjectDoesNotExist Error')
+        return redirect('team-comparison')
 
     context = {
         'team_list': team_list,
         'title': 'Team Comparison',
+        'team_one': team_one,
+        'team_two': team_two,
+        'goals_1': goals_1,
+        'goals_2': goals_2,
+        'points_1': points_1,
+        'points_2': points_2,
+        'assists_1': assists_1,
+        'assists_2': assists_2,
     }
     return render(request, 'main/team_comparison.html', context)
