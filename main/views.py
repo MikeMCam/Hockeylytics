@@ -977,7 +977,7 @@ def game_list(request):
     match_list = Match.objects.filter(createdBy=request.user)
     if request.method == 'POST':
         try:
-            dd_match = Match.objects.get(name=request.POST.get('matchDropdown'))
+            dd_match = Match.objects.get(name=request.POST.get('matchDropdown'), createdBy=request.user)
             dd_team = None
             if dd_match.yourTeam == 'AW':
                 dd_team = dd_match.awayTeam
