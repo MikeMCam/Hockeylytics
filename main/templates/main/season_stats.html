@@ -3,22 +3,22 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h3>Pick a Time Period:</h3>
-
-                <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>---</option>
-                        <option value="1">2019 - 2020</option>
-                        <option value="2">2018 - 2019</option>
-                        <option value="3">2017 - 2018</option>
-                    </select>
-                </div>
                 <form method="POST">
                     {% csrf_token %}
+                    <h3>Pick a Year:</h3>
+
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <option selected>---</option>
+                            {% for date in dates %}
+                                <option value="{{ date }}">{{ date }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                     <h3>Your Position:</h3>
 
                     <div class="input-group mb-3">
-                        <select class="custom-select" name="position" id="position" onchange="form.submit()">
+                        <select class="custom-select" name="position" id="position">
                             <option selected>---</option>
                             <option value="Forward">Forward</option>
                             <option value="Defence">Defence</option>
@@ -26,7 +26,9 @@
                             <option value="Goalie">Goalie</option>
                         </select>
                     </div>
-
+                    <div>
+                        <button class="btn btn-primary">Submit</button>
+                    </div>
                 </form>
 
                 <h3>Your Stats:</h3>

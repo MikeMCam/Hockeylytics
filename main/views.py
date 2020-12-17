@@ -1140,23 +1140,34 @@ def player_dashboard(request):
 @login_required()
 def season_stats(request):
     statList = None
+    dates = []
+    fixed_dates = []
     user = request.user
-    if request.method == 'POST':
-        position = request.POST.get('position')
-        if position == 'Forward':
-            position = 'FWD'
-        elif position == 'Defence':
-            position = 'DEF'
-        elif position == 'Center':
-            position = 'CNT'
-        elif position == 'Goalie':
-            position = 'GOL'
-        statList = Stats.objects.filter(player=user, position=position)
-    else:
-        try:
-            statList = Stats.objects.filter(player=user)
-        except ObjectDoesNotExist:
-            pass
+
+    try:
+        statList = Stats.objects.filter(player=user)
+        for stat in statList:
+            dates.append(stat.match.date.year)
+
+        for date in dates:
+            if date not in fixed_dates:
+                fixed_dates.append(date)
+        list(set(fixed_dates))
+
+        if request.method == 'POST':
+
+            position = request.POST.get('position')
+            if position == 'Forward':
+                position = 'FWD'
+            elif position == 'Defence':
+                position = 'DEF'
+            elif position == 'Center':
+                position = 'CNT'
+            elif position == 'Goalie':
+                position = 'GOL'
+            statList = Stats.objects.filter(player=user, position=position)
+    except ObjectDoesNotExist:
+        pass
     userGoals = 0
     aveGoals = 0
     highGoals = 0
@@ -1307,6 +1318,7 @@ def season_stats(request):
         'high_sog': highSog,
         'high_pim': highPim,
         'title': 'Season Stats',
+        'dates': fixed_dates,
 
     }
 

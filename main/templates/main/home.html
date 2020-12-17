@@ -3,34 +3,42 @@
     <img src="/media/main/home-image.jpg"  width=100% width=100 alt="" ><br><br>
 
     <div>
-    <h5 style="text-align: center;margin-left: auto; margin-right: auto;color: #0C3C60" >DEVELOPING INNOVATIVE STRATEGIES WITH PERFORMANCE DATA</h5>
-    <h3 style="text-align: center; color: #0C3C60;font-size: 50px;margin-left: auto; margin-right: auto" >Player Statistic</h3>
+    <h5 style="text-align: center;margin-left: auto; margin-right: auto;color: #0C3C60" >DEVELOPING INNOVATIVE STRATEGIES WITH VISUAL PERFORMANCE DATA</h5>
+    <h3 style="text-align: center; color: #0C3C60;font-size: 50px;margin-left: auto; margin-right: auto" >Player Statistics</h3>
     </div><br>
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm d-flex">
                 <div class="card card-body flex-fill home-text-box">
-                    <h3 CLASS="in-button">NEWS</h3><br>
+                    <h3 class="in-button">NEWS</h3><br>
                     <p class="in-button">Keep up with the NHL's twitter feed with just a click of a button</p><br>
-                    <button class="align-self-end button-ext" style="color: white"><a href="{% url 'news' %}">More Info</a></button>
-                </div>
-            </div>
+                    <button class="align-self-end button-ext" onclick="window.location='{% url 'news' %}'">More Info</button>
+                </div><br>
+            </div><br>
             <div class="col-sm d-flex">
                 <div class="card card-body flex-fill home-text-box">
-                    <h3 CLASS="in-button">ABOUT</h3><br>
+                    <h3 class="in-button">ABOUT</h3><br>
                     <p class="in-button">Learn more about the site's developers</p><br>
-                    <button class="align-self-end button-ext" style="color: white"><a href="{% url 'about' %}">More Info</a></button>
-                </div>
-            </div>
+                    <button class="align-self-end button-ext" onclick="window.location='{% url 'about' %}'">More Info</button>
+
+                </div><br>
+            </div><br>
             <div class="col-sm d-flex">
                 <div class="card card-body flex-fill home-text-box">
-                    <h3 CLASS="in-button">CLIENTS</h3><br>
+                    <h3 class="in-button">CLIENTS</h3><br>
                     <p class="in-button">You can check out our potential investors here</p><br>
-                    <button class="align-self-end button-ext" style="color: white"><a href="{% url 'clients' %}">More Info</a></button>
-                </div>
+                    <button class="align-self-end button-ext" onclick="window.location='{% url 'clients' %}'">More Info</button>
+                </div><br>
+            </div><br>
             </div>
-            </div>
-
+    </div><br><br>
+    <div>
+    <h2 style="text-align: center;color: #0C3C60"><b>About Hockeylytics</b></h2>
+    <h3 style="color: #0C3C60">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspWe look to provide an in-depth website for our users that is a step above other data visualistic
+        websites on the market. Through our website, coaches and players will have a login feature. Though the website will be similar for both, they will have different dashboards.
+        For coaches, they will have the ability to enter data from each game their team plays and connect different statistics to players on their team. They will also have the ability
+        to view data visualization graphs that relate to the players on their team.
+</h3>
     </div>
 {% endblock content %}
