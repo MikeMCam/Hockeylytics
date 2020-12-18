@@ -153,10 +153,10 @@ LOGIN_URL = 'login'
 django_heroku.settings(locals())
 
 # Turn off during production otherwise it won't run
-SECURE_SSL_REDIRECT = False
+SECURE_SSL_REDIRECT = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Allows password reset via email to work
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -167,8 +167,8 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 
 # Tells the browser to not send cookies unless via HTTPS
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
