@@ -34,6 +34,7 @@ def clients(request):
 def faq(request):
     return render(request, 'main/faq.html', {'title': 'FAQ'})
 
+
 # --------------------------------------- COACH VIEWS ------------------------------------------------------------------
 def coach_dashboard_2(request):
     graph = None
