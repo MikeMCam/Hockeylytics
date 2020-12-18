@@ -1,4 +1,5 @@
 {% extends "main/base.html" %}
+{% load static %}
 {% block content %}
 
     <div style="margin:auto;width: 25%" >
@@ -17,7 +18,7 @@
         <div class="row">
             <div class="col-sm d-flex">
                 <div class="card card-body flex-fill">
-                    <img src="/media/main/janko.jpg" alt="Janko"  style="width:100%;height:auto">
+                    <img src="{% static 'main/janko.jpg' %}" alt="Janko"  style="width:100%;height:auto">
                     <h1>Michael Janko</h1>
                     <p class="title">Founder and Principal</p>
                     <p>Hi my name is Michael Janko.  I am a senior at the University of North Carolina Charlotte seeking a degree in the Computer Science
@@ -34,7 +35,7 @@
             </div>
             <div class="col-sm d-flex">
                 <div class="card card-body flex-fill">
-                    <img src="/media/main/mike.jpg" alt="MC"  style="width:100%;height:auto">
+                    <img src="{% static 'main/mike.jpg' %}" alt="MC"  style="width:100%;height:auto">
                     <h1>Michael Cam</h1>
                     <p class="title">Django Developer</p>
                     <p>Hi I’m Michael Cam, a computer science / data science student at UNC Charlotte.
@@ -50,7 +51,7 @@
             </div>
             <div class="col-sm d-flex">
                 <div class="card card-body flex-fill">
-                    <img src="/media/main/tri.png" alt="Tree"  style="width:100%;height:auto">
+                    <img src="{% static 'main/tri.png' %}" alt="Tree"  style="width:100%;height:auto">
                     <h1>Tri Tran</h1>
                     <p class="title">VP Designing</p>
                     <p>Hi, my name is Tri Tran. I am a senior at UNCC majoring in Computer Science concentrating in Software, System and Networking.
@@ -66,7 +67,7 @@
             </div>
             <div class="col-sm d-flex">
                 <div class="card card-body flex-fill">
-                    <img src="/media/main/shiv.png" alt="Shiv"  style="width:100%;height:auto">
+                    <img src="{% static 'main/shiv.png' %}" alt="Shiv"  style="width:100%;height:auto">
                     <h1>Shiv Parekh</h1>
                     <p class="title">Project Programmer</p>
                     <p>Hi my name is Shiv Parekh, I am a computer science major/math minor at unc charlotte. I like coding because it gives you the ability
