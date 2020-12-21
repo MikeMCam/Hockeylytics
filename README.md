@@ -1,5 +1,5 @@
 # hockeylytics
- capstone project Fall 2020
+ capstone project Fall 2020, Can be found at hockeylytics.net
 
 # Developed using:
 <ul>
